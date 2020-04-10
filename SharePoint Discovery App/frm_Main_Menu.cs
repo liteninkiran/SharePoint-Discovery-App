@@ -26,11 +26,17 @@ namespace SharePoint_Discovery_App
 
         private void cmd_Get_Sites_Click(object sender, EventArgs e)
         {
-            // Update button caption as it will take a while to load all sites/sub-sites
-            ChangeButton(true);
-
             // Set the public variables
             SetStaticVars();
+
+            // Try to get the client
+            ClientContext clientContext = GetClient();
+
+            // Exit if we got an error
+            if (clientContext == null){return;}
+
+            // Update button caption as it will take a while to load all sites/sub-sites
+            ChangeButton(true);
 
             // Open the Site form
             frm_Site siteForm = OpenForm();
@@ -39,7 +45,7 @@ namespace SharePoint_Discovery_App
             AddColumns(siteForm);
 
             // Output all the sites/sub-sites into the data grid view
-            GetSiteAndSubSites(siteForm.dgv_Site, chk_Recursive.Checked);
+            GetSiteAndSubSites(clientContext, siteForm.dgv_Site, chk_Recursive.Checked);
 
             // Show the Site form
             siteForm.ShowDialog();
@@ -117,11 +123,24 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        private void GetSiteAndSubSites(DataGridView dgv_Site, bool recursive)
+        private static ClientContext GetClient()
         {
-            // Get client
-            ClientContext clientContext = SharePoint.GetClient(siteUrl, username, password);
+            string errorMessage = "";
 
+            // Get client
+            ClientContext clientContext = SharePoint.GetClient(siteUrl, username, password, ref errorMessage);
+
+            if (clientContext == null)
+            {
+                MessageBox.Show(errorMessage);
+                return null;
+            }
+
+            return clientContext;
+        }
+
+        private void GetSiteAndSubSites(ClientContext clientContext, DataGridView dgv_Site, bool recursive)
+        {
             // Get the SharePoint web  
             Web web = clientContext.Web;
 

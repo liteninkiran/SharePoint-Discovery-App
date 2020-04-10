@@ -75,9 +75,14 @@ namespace SharePoint_Discovery_App
 
                 // Enter credentials
                 clientContext.Credentials = new SharePointOnlineCredentials(userName, secPassword);
+
+                clientContext.Load(clientContext.Web);
+
+                clientContext.ExecuteQuery();
             }
             catch(Exception e)
             {
+                clientContext = null;
                 errorMessage = e.Message;
             }            
 
