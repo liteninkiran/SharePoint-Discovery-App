@@ -21,7 +21,15 @@ namespace SharePoint_Discovery_App
 
         private void cmd_Get_Lists_Click(object sender, EventArgs e)
         {
-            ListCollection collList = SharePoint.GetLists(txt_Site.Text, txt_Username.Text, txt_Password.Text);
+            string errorMessage = "";
+
+            ListCollection collList = SharePoint.GetLists(txt_Site.Text, txt_Username.Text, txt_Password.Text, ref errorMessage);
+
+            if(collList == null)
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
 
             // Add columns
             if(dgv_List.ColumnCount == 0)

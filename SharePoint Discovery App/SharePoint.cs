@@ -10,10 +10,18 @@ namespace SharePoint_Discovery_App
 {
     class SharePoint
     {
-        public static ListCollection GetLists(string siteUrl, string userName, string password)
+        public static ListCollection GetLists(string siteUrl, string userName, string password, ref string errorMessage)
         {
+            // Initialise empty object
+            ClientContext clientContext = null;
+
             // Set the Client Context
-            ClientContext clientContext = GetClient(siteUrl, userName, password);
+            clientContext = GetClient(siteUrl, userName, password, ref errorMessage);
+
+            if(clientContext == null)
+            {
+                return null;
+            }
 
             // Define website object
             Web oWebsite = clientContext.Web;
@@ -28,7 +36,7 @@ namespace SharePoint_Discovery_App
             return collList;
         }
 
-        public static ClientContext GetClient(string siteUrl, string userName, string password)
+        public static ClientContext GetClient(string siteUrl, string userName, string password, ref string errorMessage)
         {
             // Create a Secure String for password
             SecureString secPassword = new SecureString();
@@ -39,11 +47,21 @@ namespace SharePoint_Discovery_App
                 secPassword.AppendChar(c);
             }
 
-            // Set the Client Context
-            ClientContext clientContext = new ClientContext(siteUrl);
+            // Initialise an empty object
+            ClientContext clientContext = null;
 
-            // Enter credentials
-            clientContext.Credentials = new SharePointOnlineCredentials(userName, secPassword);
+            // Set the Client Context
+            try
+            {
+                clientContext = new ClientContext(siteUrl);
+
+                // Enter credentials
+                clientContext.Credentials = new SharePointOnlineCredentials(userName, secPassword);
+            }
+            catch(Exception e)
+            {
+                errorMessage = e.Message;
+            }            
 
             // Return the object
             return clientContext;
