@@ -73,6 +73,7 @@
             this.dgv_List.ReadOnly = true;
             this.dgv_List.Size = new System.Drawing.Size(519, 108);
             this.dgv_List.TabIndex = 7;
+            this.dgv_List.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_List_CellContentClick);
             // 
             // cmd_Get_Fields
             // 
@@ -120,6 +121,7 @@
             this.Controls.Add(this.dgv_List);
             this.Name = "frm_List";
             this.Text = "Lists";
+            this.Load += new System.EventHandler(this.frm_List_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).EndInit();
             this.ResumeLayout(false);
 

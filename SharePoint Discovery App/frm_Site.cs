@@ -23,7 +23,7 @@ namespace SharePoint_Discovery_App
             int row = dgv_Site.SelectedCells[0].RowIndex;
 
             // Store site URL
-            string siteUrl = dgv_Site[2, row].Value.ToString();
+            string siteUrl = dgv_Site[3, row].Value.ToString();
 
             // Store site name
             string siteName = dgv_Site[1, row].Value.ToString();
@@ -91,29 +91,24 @@ namespace SharePoint_Discovery_App
         private void AddColumns(frm_List listForm)
         {
             DataGridView dgv_List = listForm.dgv_List;
-            DataGridViewColumn col = null;
 
-            col = dgv_List.Columns[dgv_List.Columns.Add("listNumber", "Number")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("listName", "List Name")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("defaultView", "Default View")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("fieldCount", "Field Count")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("viewCount", "View Count")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("itemCount", "Item Count")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("listId", "GUID")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("description", "Description")];
-            col = dgv_List.Columns[dgv_List.Columns.Add("created", "Created")];
+            // Create a linked column for URL
+            DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();
+            lnk.HeaderText = "Site URL";
+            lnk.Name = "url";
+            lnk.UseColumnTextForLinkValue = false;
 
-            foreach (DataGridViewColumn c in dgv_List.Columns)
-            {
-                switch (c.Name)
-                {
-                    case "description":
-                        break;
-                    default:
-                        c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        break;
-                }
-            }
+            dgv_List.Columns.Add("listNumber", "Number");
+            dgv_List.Columns.Add("listName", "List Name");
+            dgv_List.Columns.Add("baseType", "Type");
+            dgv_List.Columns.Add("defaultView", "Default View");
+            dgv_List.Columns.Add("fieldCount", "Field Count");
+            dgv_List.Columns.Add("viewCount", "View Count");
+            dgv_List.Columns.Add("itemCount", "Item Count");
+            dgv_List.Columns.Add("listId", "GUID");
+            dgv_List.Columns.Add("description", "Description");
+            dgv_List.Columns.Add("created", "Created");
+            dgv_List.Columns.Add(lnk);
         }
 
         private void AddLists(string siteUrl, DataGridView dgv_List)
@@ -126,9 +121,10 @@ namespace SharePoint_Discovery_App
 
             foreach (SP.List oList in collList)
             {
-                string defaultViewTitle = "";
-                string viewCount = "";
-                string fieldCount = "";
+                string defaultViewUrl = null;
+                string defaultViewTitle = null;
+                string viewCount = null;
+                string fieldCount = null;
                 string itemCount = oList.ItemCount.ToString();
 
                 if (chk_Load_Fields.Checked == true)
@@ -151,6 +147,7 @@ namespace SharePoint_Discovery_App
                         SP.View defaultView = oList.DefaultView;
 
                         defaultViewTitle = defaultView.Title;
+                        defaultViewUrl = frm_Main_Menu.siteUrl + defaultView.ServerRelativeUrl;
                     }
                     catch (Exception ex)
                     {
@@ -158,20 +155,48 @@ namespace SharePoint_Discovery_App
                     }
                 }
 
+
                 dgv_List.Rows.Add();
 
                 dgv_List[0, i].Value = i + 1;
                 dgv_List[1, i].Value = oList.Title;
-                dgv_List[2, i].Value = defaultViewTitle;
-                dgv_List[3, i].Value = fieldCount;
-                dgv_List[4, i].Value = viewCount;
-                dgv_List[5, i].Value = itemCount;
-                dgv_List[6, i].Value = oList.Id;
-                dgv_List[7, i].Value = oList.Description;
-                dgv_List[8, i].Value = oList.Created;
+                dgv_List[2, i].Value = oList.BaseType;
+                dgv_List[3, i].Value = defaultViewTitle;
+                dgv_List[4, i].Value = fieldCount;
+                dgv_List[5, i].Value = viewCount;
+                dgv_List[6, i].Value = itemCount;
+                dgv_List[7, i].Value = oList.Id;
+                dgv_List[8, i].Value = oList.Description;
+                dgv_List[9, i].Value = oList.Created;
+                dgv_List[10, i].Value = defaultViewUrl;
 
                 // Increment counter
                 i++;
+            }
+        }
+
+        private void dgv_Site_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Store column index of current cell
+            int i = dgv_Site.CurrentCell.ColumnIndex;
+
+            // Check the column name
+            if (dgv_Site.Columns[i].Name == "url")
+            {
+                string url = dgv_Site.CurrentCell.Value.ToString();
+
+                System.Diagnostics.Process.Start(url);
+
+            }
+        }
+
+        private void frm_Site_Load(object sender, EventArgs e)
+        {
+            // Auto-size columns
+            foreach (DataGridViewColumn col in dgv_Site.Columns)
+            {
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; col.Width = col.Width + 10;
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             }
         }
     }

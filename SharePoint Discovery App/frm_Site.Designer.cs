@@ -52,6 +52,7 @@
             this.dgv_Site.ReadOnly = true;
             this.dgv_Site.Size = new System.Drawing.Size(591, 231);
             this.dgv_Site.TabIndex = 1;
+            this.dgv_Site.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Site_CellContentClick);
             // 
             // cmd_Close
             // 
@@ -135,6 +136,7 @@
             this.Name = "frm_Site";
             this.Text = "Sites";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_Site_FormClosing);
+            this.Load += new System.EventHandler(this.frm_Site_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Site)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

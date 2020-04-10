@@ -61,6 +61,7 @@ namespace SharePoint_Discovery_App
 
         private void SetStaticVars()
         {
+            // Store credentials
             siteUrl = txt_Site.Text;
             username = txt_Username.Text;
             password = txt_Password.Text;
@@ -98,17 +99,17 @@ namespace SharePoint_Discovery_App
             // Store reference to data grid view
             DataGridView dgv_Site = siteForm.dgv_Site;
 
+            // Create a linked column for URL
+            DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();
+            lnk.HeaderText = "Site URL";
+            lnk.Name = "url";
+            lnk.UseColumnTextForLinkValue = false;
+
             // Add columns
             dgv_Site.Columns.Add("siteNumber", "Number");
             dgv_Site.Columns.Add("title", "Title");
-            dgv_Site.Columns.Add("url", "Site URL");
             dgv_Site.Columns.Add("parent", "Parent Site");
-
-            // Set column preferences
-            foreach (DataGridViewColumn col in siteForm.dgv_Site.Columns)
-            {
-                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            }
+            dgv_Site.Columns.Add(lnk);
         }
 
         private void AddRow(DataGridView dgv_Site, params string[] list)
@@ -119,6 +120,7 @@ namespace SharePoint_Discovery_App
             // Loop through array to get values
             for (int i = 0; i < list.Length; i++)
             {
+                // Enter the value
                 dgv_Site[i, dgv_Site.RowCount - 1].Value = list[i];
             }
         }
@@ -151,7 +153,7 @@ namespace SharePoint_Discovery_App
             clientContext.ExecuteQuery();
 
             // Add row to data grid view
-            AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), web.Title, web.Url);
+            AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), web.Title, null, web.Url);
 
             // Loop through sub-sites
             GetSubSites(clientContext, web, dgv_Site, recursive);
@@ -172,7 +174,7 @@ namespace SharePoint_Discovery_App
                 if (subWeb.Url.Contains(web.Url))
                 {
                     // Add row to data grid view
-                    AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), subWeb.Title, subWeb.Url, web.Title);
+                    AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), subWeb.Title, web.Title, subWeb.Url);
 
                     // Loop through sub-sites
                     if(recursive)
