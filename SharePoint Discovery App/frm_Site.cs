@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security;
 using System.Windows.Forms;
 using Microsoft.SharePoint.Client;
 using SP = Microsoft.SharePoint.Client;
@@ -26,11 +25,14 @@ namespace SharePoint_Discovery_App
             // Store site URL
             string siteUrl = dgv_Site[2, row].Value.ToString();
 
+            // Store site name
+            string siteName = dgv_Site[1, row].Value.ToString();
+
             // Update button caption as it will take a while to load all sites/sub-sites
-            ChangeButton(true);
+            cls_Form.ChangeButton(this.cmd_Get_Lists, true, "Getting lists. Please wait...");
 
             // Open the List form
-            frm_List listForm = OpenForm();
+            frm_List listForm = OpenForm(siteName, siteUrl, this.Name);
 
             // Add columns to the data grid view
             AddColumns(listForm);
@@ -42,30 +44,46 @@ namespace SharePoint_Discovery_App
             listForm.Show();
 
             // Change the button caption back
-            ChangeButton(false);
+            cls_Form.ChangeButton(this.cmd_Get_Lists, false);
         }
 
-        private void ChangeButton(bool start)
+        private void cmd_Excel_Click(object sender, EventArgs e)
         {
-            if (start)
+            // Update button caption as it will take a while
+            cls_Form.ChangeButton(this.cmd_Excel, true, "Exporting data. Please wait...");
+
+            // Export to Excel
+            cls_Excel.ExportDatagridview(dgv_Site);
+
+            // Update button caption
+            cls_Form.ChangeButton(this.cmd_Excel, false);
+        }
+
+        private void frm_Site_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            for (int i = Application.OpenForms.Count - 1; i >= 0; i--)
             {
-                this.cmd_Get_Lists.Width = 200;
-                this.cmd_Get_Lists.Text = "Getting lists. Please wait...";
-            }
-            else
-            {
-                this.cmd_Get_Lists.Text = "Get Lists";
-                this.cmd_Get_Lists.Width = 100;
+                if (Application.OpenForms[i].Tag != null)
+                {
+                    if (Application.OpenForms[i].Tag.ToString() == this.Name)
+                    {
+                        Application.OpenForms[i].Close();
+                    }
+                }
             }
         }
 
-        public static frm_List OpenForm()
+        public static frm_List OpenForm(string siteName, string siteUrl, string tag)
         {
             // Create a new instance of the Site class
             frm_List listForm = new frm_List();
 
             listForm.Height = 700;
             listForm.Width = 1500;
+
+            listForm.Text = "Lists - " + siteUrl;
+            listForm.lbl_Header.Text = listForm.lbl_Header.Text + " - " + siteName;
+            listForm.Tag = tag;
 
             return listForm;
         }

@@ -11,7 +11,6 @@ namespace SharePoint_Discovery_App
         public static string siteUrl = "";
         public static string username = "";
         public static string password = "";
-        public static SecureString secPassword;
 
         public frm_Main_Menu()
         {
@@ -40,10 +39,10 @@ namespace SharePoint_Discovery_App
             AddColumns(siteForm);
 
             // Output all the sites/sub-sites into the data grid view
-            GetAllSubWebs(siteForm.dgv_Site, siteUrl, username, secPassword);
+            GetSiteAndSubSites(siteForm.dgv_Site, chk_Recursive.Checked);
 
             // Show the Site form
-            siteForm.Show();
+            siteForm.ShowDialog();
 
             // Change the button caption back
             ChangeButton(false);
@@ -59,7 +58,6 @@ namespace SharePoint_Discovery_App
             siteUrl = txt_Site.Text;
             username = txt_Username.Text;
             password = txt_Password.Text;
-            secPassword = SharePoint.securePassword(password);
         }
 
         private void ChangeButton(bool start)
@@ -81,62 +79,90 @@ namespace SharePoint_Discovery_App
             // Create a new instance of the Site class
             frm_Site siteForm = new frm_Site();
 
+            // Re-size the form
             siteForm.Height = 700;
             siteForm.Width = 1500;
 
+            // Return the form object
             return siteForm;
         }
 
         private void AddColumns(frm_Site siteForm)
         {
+            // Store reference to data grid view
             DataGridView dgv_Site = siteForm.dgv_Site;
-            DataGridViewColumn col = null;
 
-            col = dgv_Site.Columns[dgv_Site.Columns.Add("siteNumber", "Number")];
-            col = dgv_Site.Columns[dgv_Site.Columns.Add("title", "Title")];
-            col = dgv_Site.Columns[dgv_Site.Columns.Add("url", "Site URL")];
-            col = dgv_Site.Columns[dgv_Site.Columns.Add("parent", "Parent Site")];
+            // Add columns
+            dgv_Site.Columns.Add("siteNumber", "Number");
+            dgv_Site.Columns.Add("title", "Title");
+            dgv_Site.Columns.Add("url", "Site URL");
+            dgv_Site.Columns.Add("parent", "Parent Site");
 
-            foreach (DataGridViewColumn c in siteForm.dgv_Site.Columns)
+            // Set column preferences
+            foreach (DataGridViewColumn col in siteForm.dgv_Site.Columns)
             {
-                c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
         }
 
-        private void GetAllSubWebs(DataGridView dgv_Site, string path, string userName, SecureString password)
+        private void AddRow(DataGridView dgv_Site, params string[] list)
         {
-            // ClienContext - Get the context for the SharePoint Online Site               
-            using (var clientContext = new ClientContext(path))
+            // Add a new row
+            dgv_Site.Rows.Add();
+
+            // Loop through array to get values
+            for (int i = 0; i < list.Length; i++)
             {
-                // SharePoint Online Credentials    
-                clientContext.Credentials = new SharePointOnlineCredentials(userName, password);
+                dgv_Site[i, dgv_Site.RowCount - 1].Value = list[i];
+            }
+        }
 
-                // Get the SharePoint web  
-                Web web = clientContext.Web;
-                clientContext.Load(web, website => website.Webs, website => website.Title);
+        private void GetSiteAndSubSites(DataGridView dgv_Site, bool recursive)
+        {
+            // Get client
+            ClientContext clientContext = SharePoint.GetClient(siteUrl, username, password);
 
-                // Execute the query to the server  
-                clientContext.ExecuteQuery();
+            // Get the SharePoint web  
+            Web web = clientContext.Web;
 
-                // Loop through all the webs  
-                foreach (Web subWeb in web.Webs)
+            // Load objects
+            clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
+
+            // Execute the query to the server  
+            clientContext.ExecuteQuery();
+
+            // Add row to data grid view
+            AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), web.Title, web.Url);
+
+            // Loop through sub-sites
+            GetSubSites(clientContext, web, dgv_Site, recursive);
+        }
+
+        private void GetSubSites(ClientContext clientContext, Web web, DataGridView dgv_Site, bool recursive)
+        {
+            // Load objects
+            clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
+
+            // Execute the query to the server  
+            clientContext.ExecuteQuery();
+
+            // Loop through all the webs  
+            foreach (Web subWeb in web.Webs)
+            {
+                // Check whether it is an app URL or not - If not then get into this block  
+                if (subWeb.Url.Contains(web.Url))
                 {
-                    // Check whether it is an app URL or not - If not then get into this block  
-                    if (subWeb.Url.Contains(path))
+                    // Add row to data grid view
+                    AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), subWeb.Title, subWeb.Url, web.Title);
+
+                    // Loop through sub-sites
+                    if(recursive)
                     {
-                        string newpath = subWeb.Url;
-
-                        dgv_Site.Rows.Add();
-
-                        dgv_Site[0, dgv_Site.RowCount - 1].Value = dgv_Site.RowCount;
-                        dgv_Site[1, dgv_Site.RowCount - 1].Value = subWeb.Title;
-                        dgv_Site[2, dgv_Site.RowCount - 1].Value = subWeb.Url;
-                        dgv_Site[3, dgv_Site.RowCount - 1].Value = web.Title;
-
-                        GetAllSubWebs(dgv_Site, newpath, userName, password);
-                    }
+                        GetSubSites(clientContext, subWeb, dgv_Site, recursive);
+                    }                    
                 }
             }
         }
+        
     }
 }

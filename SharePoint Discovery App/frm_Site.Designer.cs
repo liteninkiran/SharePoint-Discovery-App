@@ -34,6 +34,7 @@
             this.chk_Load_Fields = new System.Windows.Forms.CheckBox();
             this.chk_Load_Views = new System.Windows.Forms.CheckBox();
             this.lbl_Header = new System.Windows.Forms.Label();
+            this.cmd_Excel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Site)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,13 +50,13 @@
             this.dgv_Site.MultiSelect = false;
             this.dgv_Site.Name = "dgv_Site";
             this.dgv_Site.ReadOnly = true;
-            this.dgv_Site.Size = new System.Drawing.Size(591, 249);
+            this.dgv_Site.Size = new System.Drawing.Size(591, 231);
             this.dgv_Site.TabIndex = 1;
             // 
             // cmd_Close
             // 
             this.cmd_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_Close.Location = new System.Drawing.Point(503, 372);
+            this.cmd_Close.Location = new System.Drawing.Point(503, 350);
             this.cmd_Close.Name = "cmd_Close";
             this.cmd_Close.Size = new System.Drawing.Size(100, 30);
             this.cmd_Close.TabIndex = 0;
@@ -66,7 +67,7 @@
             // cmd_Get_Lists
             // 
             this.cmd_Get_Lists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmd_Get_Lists.Location = new System.Drawing.Point(12, 372);
+            this.cmd_Get_Lists.Location = new System.Drawing.Point(12, 350);
             this.cmd_Get_Lists.Name = "cmd_Get_Lists";
             this.cmd_Get_Lists.Size = new System.Drawing.Size(100, 30);
             this.cmd_Get_Lists.TabIndex = 5;
@@ -78,7 +79,7 @@
             // 
             this.chk_Load_Fields.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chk_Load_Fields.AutoSize = true;
-            this.chk_Load_Fields.Location = new System.Drawing.Point(99, 343);
+            this.chk_Load_Fields.Location = new System.Drawing.Point(99, 325);
             this.chk_Load_Fields.Name = "chk_Load_Fields";
             this.chk_Load_Fields.Size = new System.Drawing.Size(80, 17);
             this.chk_Load_Fields.TabIndex = 13;
@@ -89,7 +90,7 @@
             // 
             this.chk_Load_Views.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chk_Load_Views.AutoSize = true;
-            this.chk_Load_Views.Location = new System.Drawing.Point(12, 343);
+            this.chk_Load_Views.Location = new System.Drawing.Point(12, 325);
             this.chk_Load_Views.Name = "chk_Load_Views";
             this.chk_Load_Views.Size = new System.Drawing.Size(81, 17);
             this.chk_Load_Views.TabIndex = 12;
@@ -108,11 +109,23 @@
             this.lbl_Header.Text = "Sites && Sub-Sites";
             this.lbl_Header.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cmd_Excel
+            // 
+            this.cmd_Excel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmd_Excel.Location = new System.Drawing.Point(118, 350);
+            this.cmd_Excel.Name = "cmd_Excel";
+            this.cmd_Excel.Size = new System.Drawing.Size(100, 30);
+            this.cmd_Excel.TabIndex = 15;
+            this.cmd_Excel.Text = "Excel";
+            this.cmd_Excel.UseVisualStyleBackColor = true;
+            this.cmd_Excel.Click += new System.EventHandler(this.cmd_Excel_Click);
+            // 
             // frm_Site
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 414);
+            this.Controls.Add(this.cmd_Excel);
             this.Controls.Add(this.lbl_Header);
             this.Controls.Add(this.chk_Load_Fields);
             this.Controls.Add(this.chk_Load_Views);
@@ -121,6 +134,7 @@
             this.Controls.Add(this.dgv_Site);
             this.Name = "frm_Site";
             this.Text = "Sites";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_Site_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Site)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -134,5 +148,6 @@
         private System.Windows.Forms.CheckBox chk_Load_Fields;
         private System.Windows.Forms.CheckBox chk_Load_Views;
         private System.Windows.Forms.Label lbl_Header;
+        private System.Windows.Forms.Button cmd_Excel;
     }
 }

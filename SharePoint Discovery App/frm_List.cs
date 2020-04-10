@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharePoint_Discovery_App
@@ -25,6 +18,18 @@ namespace SharePoint_Discovery_App
         private void cmd_Close_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cmd_Excel_Click(object sender, EventArgs e)
+        {
+            // Update button caption as it will take a while
+            cls_Form.ChangeButton(this.cmd_Excel, true, "Exporting data. Please wait...");
+
+            // Export to Excel
+            cls_Excel.ExportDatagridview(dgv_List);
+
+            // Update button caption
+            cls_Form.ChangeButton(this.cmd_Excel, false);
         }
     }
 }

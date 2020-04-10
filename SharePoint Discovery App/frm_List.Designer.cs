@@ -33,6 +33,7 @@
             this.dgv_List = new System.Windows.Forms.DataGridView();
             this.cmd_Get_Fields = new System.Windows.Forms.Button();
             this.lbl_Header = new System.Windows.Forms.Label();
+            this.cmd_Excel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,11 +96,23 @@
             this.lbl_Header.Text = "Lists";
             this.lbl_Header.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cmd_Excel
+            // 
+            this.cmd_Excel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmd_Excel.Location = new System.Drawing.Point(224, 210);
+            this.cmd_Excel.Name = "cmd_Excel";
+            this.cmd_Excel.Size = new System.Drawing.Size(100, 30);
+            this.cmd_Excel.TabIndex = 16;
+            this.cmd_Excel.Text = "Excel";
+            this.cmd_Excel.UseVisualStyleBackColor = true;
+            this.cmd_Excel.Click += new System.EventHandler(this.cmd_Excel_Click);
+            // 
             // frm_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 277);
+            this.Controls.Add(this.cmd_Excel);
             this.Controls.Add(this.lbl_Header);
             this.Controls.Add(this.cmd_Get_Fields);
             this.Controls.Add(this.cmd_Get_Views);
@@ -118,6 +131,7 @@
         private System.Windows.Forms.Button cmd_Close;
         public System.Windows.Forms.DataGridView dgv_List;
         private System.Windows.Forms.Button cmd_Get_Fields;
-        private System.Windows.Forms.Label lbl_Header;
+        public System.Windows.Forms.Label lbl_Header;
+        private System.Windows.Forms.Button cmd_Excel;
     }
 }

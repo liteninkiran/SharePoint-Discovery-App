@@ -38,6 +38,7 @@
             this.cmd_Close = new System.Windows.Forms.Button();
             this.lbl_Header = new System.Windows.Forms.Label();
             this.lbl_Credentials = new System.Windows.Forms.Label();
+            this.chk_Recursive = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lbl_Password
@@ -97,7 +98,7 @@
             // cmd_Get_Sites
             // 
             this.cmd_Get_Sites.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmd_Get_Sites.Location = new System.Drawing.Point(72, 345);
+            this.cmd_Get_Sites.Location = new System.Drawing.Point(72, 340);
             this.cmd_Get_Sites.Name = "cmd_Get_Sites";
             this.cmd_Get_Sites.Size = new System.Drawing.Size(100, 30);
             this.cmd_Get_Sites.TabIndex = 4;
@@ -108,7 +109,7 @@
             // cmd_Close
             // 
             this.cmd_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_Close.Location = new System.Drawing.Point(531, 345);
+            this.cmd_Close.Location = new System.Drawing.Point(531, 340);
             this.cmd_Close.Name = "cmd_Close";
             this.cmd_Close.Size = new System.Drawing.Size(100, 30);
             this.cmd_Close.TabIndex = 0;
@@ -138,11 +139,23 @@
             this.lbl_Credentials.TabIndex = 9;
             this.lbl_Credentials.Text = "Please Enter Your Credentials";
             // 
+            // chk_Recursive
+            // 
+            this.chk_Recursive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chk_Recursive.AutoSize = true;
+            this.chk_Recursive.Location = new System.Drawing.Point(72, 317);
+            this.chk_Recursive.Name = "chk_Recursive";
+            this.chk_Recursive.Size = new System.Drawing.Size(113, 17);
+            this.chk_Recursive.TabIndex = 10;
+            this.chk_Recursive.Text = "Search recursively";
+            this.chk_Recursive.UseVisualStyleBackColor = true;
+            // 
             // frm_Main_Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 382);
+            this.Controls.Add(this.chk_Recursive);
             this.Controls.Add(this.lbl_Credentials);
             this.Controls.Add(this.lbl_Header);
             this.Controls.Add(this.cmd_Get_Sites);
@@ -173,5 +186,6 @@
         private System.Windows.Forms.Button cmd_Close;
         private System.Windows.Forms.Label lbl_Header;
         private System.Windows.Forms.Label lbl_Credentials;
+        private System.Windows.Forms.CheckBox chk_Recursive;
     }
 }
