@@ -10,6 +10,12 @@ namespace SharePoint_Discovery_App
 {
     class SharePoint
     {
+        public static ListCollection GetLists(ClientContext clientContext)
+        {
+            string errorMessage = "";
+            return GetLists(clientContext, ref errorMessage);
+        }
+
         public static ListCollection GetLists(ClientContext clientContext, ref string errorMessage)
         {
             // Define empty collection
@@ -34,7 +40,7 @@ namespace SharePoint_Discovery_App
             return collList;
         }
 
-        public static ClientContext GetClient(string siteUrl, string userName, string password, ref string errorMessage)
+        public static SecureString securePassword(string password)
         {
             // Create a Secure String for password
             SecureString secPassword = new SecureString();
@@ -44,6 +50,20 @@ namespace SharePoint_Discovery_App
             {
                 secPassword.AppendChar(c);
             }
+
+            return secPassword;
+        }
+
+        public static ClientContext GetClient(string siteUrl, string userName, string password)
+        {
+            string errorMessage = "";
+            return GetClient(siteUrl, userName, password, ref errorMessage);
+        }
+
+        public static ClientContext GetClient(string siteUrl, string userName, string password, ref string errorMessage)
+        {
+            // Create a Secure String for password
+            SecureString secPassword = securePassword(password);
 
             // Initialise an empty object
             ClientContext clientContext = null;
