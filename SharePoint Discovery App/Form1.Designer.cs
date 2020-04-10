@@ -37,6 +37,9 @@
             this.txt_Username = new System.Windows.Forms.TextBox();
             this.lbl_Password = new System.Windows.Forms.Label();
             this.txt_Password = new System.Windows.Forms.TextBox();
+            this.cmd_Close = new System.Windows.Forms.Button();
+            this.chk_Load_Views = new System.Windows.Forms.CheckBox();
+            this.chk_Load_Fields = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,13 +74,16 @@
             // 
             // dgv_List
             // 
+            this.dgv_List.AllowUserToAddRows = false;
+            this.dgv_List.AllowUserToDeleteRows = false;
             this.dgv_List.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_List.Location = new System.Drawing.Point(41, 116);
+            this.dgv_List.Location = new System.Drawing.Point(41, 141);
             this.dgv_List.Name = "dgv_List";
-            this.dgv_List.Size = new System.Drawing.Size(421, 253);
+            this.dgv_List.ReadOnly = true;
+            this.dgv_List.Size = new System.Drawing.Size(421, 228);
             this.dgv_List.TabIndex = 3;
             // 
             // cmd_Clear
@@ -127,11 +133,45 @@
             this.txt_Password.Size = new System.Drawing.Size(365, 20);
             this.txt_Password.TabIndex = 7;
             // 
+            // cmd_Close
+            // 
+            this.cmd_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmd_Close.Location = new System.Drawing.Point(363, 388);
+            this.cmd_Close.Name = "cmd_Close";
+            this.cmd_Close.Size = new System.Drawing.Size(99, 25);
+            this.cmd_Close.TabIndex = 9;
+            this.cmd_Close.Text = "Close";
+            this.cmd_Close.UseVisualStyleBackColor = true;
+            this.cmd_Close.Click += new System.EventHandler(this.cmd_Close_Click);
+            // 
+            // chk_Load_Views
+            // 
+            this.chk_Load_Views.AutoSize = true;
+            this.chk_Load_Views.Location = new System.Drawing.Point(41, 118);
+            this.chk_Load_Views.Name = "chk_Load_Views";
+            this.chk_Load_Views.Size = new System.Drawing.Size(81, 17);
+            this.chk_Load_Views.TabIndex = 10;
+            this.chk_Load_Views.Text = "Load Views";
+            this.chk_Load_Views.UseVisualStyleBackColor = true;
+            // 
+            // chk_Load_Fields
+            // 
+            this.chk_Load_Fields.AutoSize = true;
+            this.chk_Load_Fields.Location = new System.Drawing.Point(128, 118);
+            this.chk_Load_Fields.Name = "chk_Load_Fields";
+            this.chk_Load_Fields.Size = new System.Drawing.Size(80, 17);
+            this.chk_Load_Fields.TabIndex = 11;
+            this.chk_Load_Fields.Text = "Load Fields";
+            this.chk_Load_Fields.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 437);
+            this.Controls.Add(this.chk_Load_Fields);
+            this.Controls.Add(this.chk_Load_Views);
+            this.Controls.Add(this.cmd_Close);
             this.Controls.Add(this.lbl_Password);
             this.Controls.Add(this.txt_Password);
             this.Controls.Add(this.lbl_Username);
@@ -143,6 +183,7 @@
             this.Controls.Add(this.cmd_Get_Lists);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -160,6 +201,9 @@
         private System.Windows.Forms.TextBox txt_Username;
         private System.Windows.Forms.Label lbl_Password;
         private System.Windows.Forms.TextBox txt_Password;
+        private System.Windows.Forms.Button cmd_Close;
+        private System.Windows.Forms.CheckBox chk_Load_Views;
+        private System.Windows.Forms.CheckBox chk_Load_Fields;
     }
 }
 

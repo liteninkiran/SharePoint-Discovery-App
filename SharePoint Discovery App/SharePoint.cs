@@ -10,29 +10,27 @@ namespace SharePoint_Discovery_App
 {
     class SharePoint
     {
-        public static ListCollection GetLists(string siteUrl, string userName, string password, ref string errorMessage)
+        public static ListCollection GetLists(ClientContext clientContext, ref string errorMessage)
         {
-            // Initialise empty object
-            ClientContext clientContext = null;
+            // Define empty collection
+            ListCollection collList = null;
 
-            // Set the Client Context
-            clientContext = GetClient(siteUrl, userName, password, ref errorMessage);
-
-            if(clientContext == null)
+            try
             {
-                return null;
+                // Store lists in a collection
+                collList = clientContext.Web.Lists;
+
+                // Retreive lists
+                clientContext.Load(collList);
+
+                clientContext.ExecuteQuery();
             }
-
-            // Define website object
-            Web oWebsite = clientContext.Web;
-
-            // Store lists in a collection
-            ListCollection collList = oWebsite.Lists;
-
-            // Retreive lists
-            clientContext.Load(collList);
-            clientContext.ExecuteQuery();
-
+            catch (Exception e)
+            {
+                errorMessage = e.Message;
+                return null;
+            }            
+            
             return collList;
         }
 
