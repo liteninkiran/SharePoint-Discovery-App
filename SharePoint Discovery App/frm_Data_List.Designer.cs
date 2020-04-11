@@ -59,6 +59,7 @@
             this.Controls.Add(this.cmd_Get_Fields);
             this.Controls.Add(this.cmd_Get_Views);
             this.Name = "frm_Data_List";
+            this.Load += new System.EventHandler(this.frm_Data_List_Load);
             this.Controls.SetChildIndex(this.lbl_Header, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Views, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Fields, 0);

@@ -63,5 +63,21 @@ namespace SharePoint_Discovery_App
                 System.Diagnostics.Process.Start(url);
             }
         }
+
+        public void AddRow(params string[] list)
+        {
+            // Store the row count
+            int j = dgv_Data.RowCount;
+
+            // Add a new row
+            dgv_Data.Rows.Add();
+
+            // Loop through array to get values
+            for (int i = 0; i < list.Length; i++)
+            {
+                // Enter the value
+                dgv_Data[i, j].Value = list[i];
+            }
+        }
     }
 }

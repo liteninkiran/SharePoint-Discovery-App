@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SharePoint_Discovery_App
@@ -14,5 +9,32 @@ namespace SharePoint_Discovery_App
         {
             InitializeComponent();
         }
+
+        private void frm_Data_List_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        public void AddColumns()
+        {
+            // Create a linked column for URL
+            DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();
+            lnk.HeaderText = "Site URL";
+            lnk.Name = "url";
+            lnk.UseColumnTextForLinkValue = false;
+
+            dgv_Data.Columns.Add("listNumber", "Number");
+            dgv_Data.Columns.Add("listName", "List Name");
+            dgv_Data.Columns.Add("baseType", "Type");
+            dgv_Data.Columns.Add("defaultView", "Default View");
+            dgv_Data.Columns.Add("fieldCount", "Field Count");
+            dgv_Data.Columns.Add("viewCount", "View Count");
+            dgv_Data.Columns.Add("itemCount", "Item Count");
+            dgv_Data.Columns.Add("listId", "GUID");
+            dgv_Data.Columns.Add("description", "Description");
+            dgv_Data.Columns.Add("created", "Created");
+            dgv_Data.Columns.Add(lnk);
+        }
+
     }
 }

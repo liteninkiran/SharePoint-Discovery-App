@@ -74,6 +74,8 @@
             this.Controls.Add(this.chk_Load_Views);
             this.Controls.Add(this.cmd_Get_Lists);
             this.Name = "frm_Data_Site";
+            this.Load += new System.EventHandler(this.frm_Data_Site_Load);
+            this.Controls.SetChildIndex(this.lbl_Header, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Lists, 0);
             this.Controls.SetChildIndex(this.chk_Load_Views, 0);
             this.Controls.SetChildIndex(this.chk_Load_Fields, 0);

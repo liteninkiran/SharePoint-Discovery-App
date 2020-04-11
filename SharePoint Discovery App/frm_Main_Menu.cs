@@ -41,11 +41,8 @@ namespace SharePoint_Discovery_App
             // Open the Site form
             frm_Data_Site siteForm = OpenForm();
 
-            // Add columns to the data grid view
-            AddColumns(siteForm);
-
             // Output all the sites/sub-sites into the data grid view
-            GetSiteAndSubSites(clientContext, siteForm.dgv_Data, chk_Recursive.Checked);
+            GetSiteAndSubSites(clientContext, siteForm, chk_Recursive.Checked);
 
             // Show the Site form
             siteForm.ShowDialog();
@@ -86,6 +83,7 @@ namespace SharePoint_Discovery_App
             // Create a new instance of the Site class
             frm_Data_Site siteForm = new frm_Data_Site();
 
+            // Give a new header row
             siteForm.Text = "Sites";
             siteForm.lbl_Header.Text = "Sites && Sub-Sites";
 
@@ -93,39 +91,11 @@ namespace SharePoint_Discovery_App
             siteForm.Height = 700;
             siteForm.Width = 1000;
 
+            // Add columns to the data grid view
+            siteForm.AddColumns();
+
             // Return the form object
             return siteForm;
-        }
-
-        private void AddColumns(frm_Data_Site siteForm)
-        {
-            // Store reference to data grid view
-            DataGridView dgv_Site = siteForm.dgv_Data;
-
-            // Create a linked column for URL
-            DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();
-            lnk.HeaderText = "Site URL";
-            lnk.Name = "url";
-            lnk.UseColumnTextForLinkValue = false;
-
-            // Add columns
-            dgv_Site.Columns.Add("siteNumber", "Number");
-            dgv_Site.Columns.Add("title", "Title");
-            dgv_Site.Columns.Add("parent", "Parent Site");
-            dgv_Site.Columns.Add(lnk);
-        }
-
-        private void AddRow(DataGridView dgv_Site, params string[] list)
-        {
-            // Add a new row
-            dgv_Site.Rows.Add();
-
-            // Loop through array to get values
-            for (int i = 0; i < list.Length; i++)
-            {
-                // Enter the value
-                dgv_Site[i, dgv_Site.RowCount - 1].Value = list[i];
-            }
         }
 
         private static ClientContext GetClient()
@@ -144,7 +114,7 @@ namespace SharePoint_Discovery_App
             return clientContext;
         }
 
-        private void GetSiteAndSubSites(ClientContext clientContext, DataGridView dgv_Site, bool recursive)
+        private void GetSiteAndSubSites(ClientContext clientContext, frm_Data_Site siteForm, bool recursive)
         {
             // Get the SharePoint web  
             Web web = clientContext.Web;
@@ -152,20 +122,30 @@ namespace SharePoint_Discovery_App
             // Load objects
             clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
 
+            // Load lists
+            clientContext.Load(web.Lists);
+
             // Execute the query to the server  
             clientContext.ExecuteQuery();
 
+            // Store the data grid view's row count
+            int i = siteForm.dgv_Data.RowCount + 1;
+
             // Add row to data grid view
-            AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), web.Title, null, web.Url);
+            siteForm.AddRow(i.ToString(), web.Title, null, web.Lists.Count.ToString(), web.Url);
+            //siteForm.AddRow(i.ToString(), web.Title, null, "-", web.Url);
 
             // Loop through sub-sites
-            GetSubSites(clientContext, web, dgv_Site, recursive);
+            GetSubSites(clientContext, web, siteForm, recursive);
         }
 
-        private void GetSubSites(ClientContext clientContext, Web web, DataGridView dgv_Site, bool recursive)
+        private void GetSubSites(ClientContext clientContext, Web web, frm_Data_Site siteForm, bool recursive)
         {
             // Load objects
             clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
+
+            // Load lists
+            clientContext.Load(web.Lists);
 
             // Execute the query to the server  
             clientContext.ExecuteQuery();
@@ -176,13 +156,17 @@ namespace SharePoint_Discovery_App
                 // Check whether it is an app URL or not - If not then get into this block  
                 if (subWeb.Url.Contains(web.Url))
                 {
+                    // Store the data grid view's row count
+                    int i = siteForm.dgv_Data.RowCount + 1;
+
                     // Add row to data grid view
-                    AddRow(dgv_Site, (dgv_Site.RowCount + 1).ToString(), subWeb.Title, web.Title, subWeb.Url);
+                    siteForm.AddRow(i.ToString(), subWeb.Title, web.Title, web.Lists.Count.ToString(), subWeb.Url);
+                    //siteForm.AddRow(i.ToString(), subWeb.Title, web.Title, "-", subWeb.Url);
 
                     // Loop through sub-sites
-                    if(recursive)
+                    if (recursive)
                     {
-                        GetSubSites(clientContext, subWeb, dgv_Site, recursive);
+                        GetSubSites(clientContext, subWeb, siteForm, recursive);
                     }                    
                 }
             }
