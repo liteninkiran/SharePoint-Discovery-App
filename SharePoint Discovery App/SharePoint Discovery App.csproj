@@ -99,6 +99,12 @@
     <Compile Include="frm_Data.Designer.cs">
       <DependentUpon>frm_Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_Data_Field.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Data_Field.Designer.cs">
+      <DependentUpon>frm_Data_Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_Data_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,12 @@
     </Compile>
     <Compile Include="frm_Data_Site.Designer.cs">
       <DependentUpon>frm_Data_Site.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Data_View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Data_View.Designer.cs">
+      <DependentUpon>frm_Data_View.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_Main_Menu.cs">
       <SubType>Form</SubType>

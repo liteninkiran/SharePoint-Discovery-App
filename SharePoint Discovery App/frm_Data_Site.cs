@@ -61,6 +61,10 @@ namespace SharePoint_Discovery_App
                     clientContext.ExecuteQuery();
                     fieldCount = oList.Fields.Count.ToString();
                 }
+                else
+                {
+                    listForm.dgv_Data.Columns["fieldCount"].Visible = false;
+                }
 
                 if (chk_Load_Views.Checked == true)
                 {
@@ -81,6 +85,12 @@ namespace SharePoint_Discovery_App
                     {
                         defaultViewTitle = "";
                     }
+                }
+                else
+                {
+                    listForm.dgv_Data.Columns["defaultView"].Visible = false;
+                    listForm.dgv_Data.Columns["viewCount"].Visible = false;
+                    listForm.dgv_Data.Columns["url"].Visible = false;
                 }
 
                 // Increment counter

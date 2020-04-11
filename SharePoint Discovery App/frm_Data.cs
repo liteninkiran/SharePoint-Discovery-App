@@ -24,6 +24,11 @@ namespace SharePoint_Discovery_App
 
         private void frm_Data_Load(object sender, EventArgs e)
         {
+            ResizeColumns();
+        }
+
+        public void ResizeColumns()
+        {
             // Auto-size columns
             foreach (DataGridViewColumn col in dgv_Data.Columns)
             {

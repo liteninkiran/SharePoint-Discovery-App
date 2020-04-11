@@ -10,11 +10,6 @@ namespace SharePoint_Discovery_App
             InitializeComponent();
         }
 
-        private void frm_Data_List_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         public void AddColumns()
         {
             // Create a linked column for URL
