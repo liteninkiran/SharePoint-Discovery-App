@@ -39,13 +39,13 @@ namespace SharePoint_Discovery_App
             ChangeButton(true);
 
             // Open the Site form
-            frm_Site siteForm = OpenForm();
+            frm_Data_Site siteForm = OpenForm();
 
             // Add columns to the data grid view
             AddColumns(siteForm);
 
             // Output all the sites/sub-sites into the data grid view
-            GetSiteAndSubSites(clientContext, siteForm.dgv_Site, chk_Recursive.Checked);
+            GetSiteAndSubSites(clientContext, siteForm.dgv_Data, chk_Recursive.Checked);
 
             // Show the Site form
             siteForm.ShowDialog();
@@ -81,23 +81,26 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        public static frm_Site OpenForm()
+        public static frm_Data_Site OpenForm()
         {
             // Create a new instance of the Site class
-            frm_Site siteForm = new frm_Site();
+            frm_Data_Site siteForm = new frm_Data_Site();
+
+            siteForm.Text = "Sites";
+            siteForm.lbl_Header.Text = "Sites && Sub-Sites";
 
             // Re-size the form
             siteForm.Height = 700;
-            siteForm.Width = 1500;
+            siteForm.Width = 1000;
 
             // Return the form object
             return siteForm;
         }
 
-        private void AddColumns(frm_Site siteForm)
+        private void AddColumns(frm_Data_Site siteForm)
         {
             // Store reference to data grid view
-            DataGridView dgv_Site = siteForm.dgv_Site;
+            DataGridView dgv_Site = siteForm.dgv_Data;
 
             // Create a linked column for URL
             DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();

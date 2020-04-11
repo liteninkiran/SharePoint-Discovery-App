@@ -5,92 +5,40 @@ using SP = Microsoft.SharePoint.Client;
 
 namespace SharePoint_Discovery_App
 {
-    public partial class frm_Site : System.Windows.Forms.Form
+    public partial class frm_Data_Site : SharePoint_Discovery_App.frm_Data
     {
-        public frm_Site()
+        public frm_Data_Site()
         {
             InitializeComponent();
-        }
-
-        private void cmd_Close_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void cmd_Get_Lists_Click(object sender, EventArgs e)
         {
             // Store selected row
-            int row = dgv_Site.SelectedCells[0].RowIndex;
+            int row = dgv_Data.SelectedCells[0].RowIndex;
 
             // Store site URL
-            string siteUrl = dgv_Site[3, row].Value.ToString();
+            string siteUrl = dgv_Data[3, row].Value.ToString();
 
             // Store site name
-            string siteName = dgv_Site[1, row].Value.ToString();
-
-            // Update button caption as it will take a while to load all sites/sub-sites
-            cls_Form.ChangeButton(this.cmd_Get_Lists, true, "Getting lists. Please wait...");
+            string siteName = dgv_Data[1, row].Value.ToString();
 
             // Open the List form
-            frm_List listForm = OpenForm(siteName, siteUrl, this.Name);
+            frm_Data_List listForm = OpenForm(siteName, siteUrl, this.Name);
 
             // Add columns to the data grid view
             AddColumns(listForm);
 
             // Get lists
-            AddLists(siteUrl, listForm.dgv_List);
+            AddLists(siteUrl, listForm.dgv_Data);
 
             // Show the List form
             listForm.Show();
-
-            // Change the button caption back
-            cls_Form.ChangeButton(this.cmd_Get_Lists, false);
         }
 
-        private void cmd_Excel_Click(object sender, EventArgs e)
+        private void AddColumns(frm_Data_List listForm)
         {
-            // Update button caption as it will take a while
-            cls_Form.ChangeButton(this.cmd_Excel, true, "Exporting data. Please wait...");
-
-            // Export to Excel
-            cls_Excel.ExportDatagridview(dgv_Site);
-
-            // Update button caption
-            cls_Form.ChangeButton(this.cmd_Excel, false);
-        }
-
-        private void frm_Site_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            for (int i = Application.OpenForms.Count - 1; i >= 0; i--)
-            {
-                if (Application.OpenForms[i].Tag != null)
-                {
-                    if (Application.OpenForms[i].Tag.ToString() == this.Name)
-                    {
-                        Application.OpenForms[i].Close();
-                    }
-                }
-            }
-        }
-
-        public static frm_List OpenForm(string siteName, string siteUrl, string tag)
-        {
-            // Create a new instance of the Site class
-            frm_List listForm = new frm_List();
-
-            listForm.Height = 700;
-            listForm.Width = 1500;
-
-            listForm.Text = "Lists - " + siteUrl;
-            listForm.lbl_Header.Text = listForm.lbl_Header.Text + " - " + siteName;
-            listForm.Tag = tag;
-
-            return listForm;
-        }
-
-        private void AddColumns(frm_List listForm)
-        {
-            DataGridView dgv_List = listForm.dgv_List;
+            DataGridView dgv_List = listForm.dgv_Data;
 
             // Create a linked column for URL
             DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();
@@ -175,29 +123,22 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        private void dgv_Site_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        public static frm_Data_List OpenForm(string siteName, string siteUrl, string tag)
         {
-            // Store column index of current cell
-            int i = dgv_Site.CurrentCell.ColumnIndex;
+            // Create a new instance of the Site class
+            frm_Data_List listForm = new frm_Data_List();
 
-            // Check the column name
-            if (dgv_Site.Columns[i].Name == "url")
-            {
-                string url = dgv_Site.CurrentCell.Value.ToString();
+            listForm.Text = "Lists";
+            listForm.lbl_Header.Text = "Lists";
 
-                System.Diagnostics.Process.Start(url);
+            listForm.Height = 700;
+            listForm.Width = 1500;
 
-            }
-        }
+            listForm.Text = "Lists - " + siteUrl;
+            listForm.lbl_Header.Text = listForm.lbl_Header.Text + " - " + siteName;
+            listForm.Tag = tag;
 
-        private void frm_Site_Load(object sender, EventArgs e)
-        {
-            // Auto-size columns
-            foreach (DataGridViewColumn col in dgv_Site.Columns)
-            {
-                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; col.Width = col.Width + 10;
-                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            }
+            return listForm;
         }
     }
 }
