@@ -28,7 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // frm_Data_View
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(588, 450);
+            this.Name = "frm_Data_View";
+            this.Load += new System.EventHandler(this.frm_Data_View_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -141,6 +141,9 @@
     <EmbeddedResource Include="frm_Data_Site.resx">
       <DependentUpon>frm_Data_Site.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_Data_View.resx">
+      <DependentUpon>frm_Data_View.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_Main_Menu.resx">
       <DependentUpon>frm_Main_Menu.cs</DependentUpon>
     </EmbeddedResource>

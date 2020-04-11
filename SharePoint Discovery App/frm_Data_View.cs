@@ -14,5 +14,30 @@ namespace SharePoint_Discovery_App
         {
             InitializeComponent();
         }
+
+        public void AddColumns()
+        {
+            // Create a linked column for URL
+            DataGridViewLinkColumn lnk = new DataGridViewLinkColumn();
+            lnk.HeaderText = "Site URL";
+            lnk.Name = "url";
+            lnk.UseColumnTextForLinkValue = false;
+
+            DataGridViewColumn col = null;
+
+            // Add columns
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("viewName", "Name")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldCount", "Field Count")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("rowLimit", "Row Limit")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("query", "Query")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add(lnk)];
+        }
+
+        private void frm_Data_View_Load(object sender, EventArgs e)
+        {
+            // Re-size columns
+            ResizeColumns();
+        }
     }
 }

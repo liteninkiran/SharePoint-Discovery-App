@@ -24,7 +24,7 @@ namespace SharePoint_Discovery_App
             string siteUrl = dgv_Data[col, row].Value.ToString();
 
             // Store column of Site Name
-            col = dgv_Data.Columns["title"].Index;
+            col = dgv_Data.Columns["siteName"].Index;
 
             // Store site name
             string siteName = dgv_Data[col, row].Value.ToString();
@@ -146,15 +146,14 @@ namespace SharePoint_Discovery_App
             // Create a new instance of the Site class
             frm_Data_List listForm = new frm_Data_List();
 
-            listForm.Text = "Lists";
-            listForm.lbl_Header.Text = "Lists";
-
             listForm.Height = 700;
             listForm.Width = 1500;
 
-            listForm.Text = "Lists - " + siteUrl;
-            listForm.lbl_Header.Text = listForm.lbl_Header.Text + " - " + siteName;
+            listForm.Text = siteUrl;
+            listForm.lbl_Header.Text = "Lists - " + siteName;
+            listForm.lbl_Header.Tag = siteName;
             listForm.Tag = tag;
+            listForm.dgv_Data.Tag = siteUrl;
 
             // Add columns to the data grid view
             listForm.AddColumns();
@@ -174,7 +173,7 @@ namespace SharePoint_Discovery_App
 
             // Add columns
             col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("title", "Title")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("siteName", "Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("parent", "Parent Site")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("listCount", "List Count")]; col.ValueType = typeof(int);
             col = dgv_Data.Columns[dgv_Data.Columns.Add("created", "Created")]; col.ValueType = typeof(DateTime);
