@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cmd_Get_Lists = new System.Windows.Forms.Button();
             this.chk_Load_Fields = new System.Windows.Forms.CheckBox();
             this.chk_Load_Views = new System.Windows.Forms.CheckBox();
+            this.tip_Load_Views = new System.Windows.Forms.ToolTip(this.components);
+            this.tip_Load_Fields = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // cmd_Get_Lists
@@ -89,5 +92,7 @@
         private System.Windows.Forms.Button cmd_Get_Lists;
         private System.Windows.Forms.CheckBox chk_Load_Fields;
         private System.Windows.Forms.CheckBox chk_Load_Views;
+        private System.Windows.Forms.ToolTip tip_Load_Views;
+        private System.Windows.Forms.ToolTip tip_Load_Fields;
     }
 }

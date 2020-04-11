@@ -20,6 +20,9 @@ namespace SharePoint_Discovery_App
             txt_Site.Text = "https://my.sharepoint.com";
             txt_Username.Text = "user@domain.com";
             txt_Password.Text = "password";
+
+            tip_Recursive.SetToolTip(this.chk_Recursive, "Uncheck to search sub-sites 1 layer deep (quicker). Check to recursively search all sites (slower).");
+            tip_Limit.SetToolTip(this.hsc_Limit, "Limit the number of sub-sites retrieved (quicker). Set to zero to retreive all sub-sites (slower).");
         }
 
         private void cmd_Get_Sites_Click(object sender, EventArgs e)
@@ -56,7 +59,7 @@ namespace SharePoint_Discovery_App
             password = txt_Password.Text;
         }
 
-        public static frm_Data_Site OpenForm()
+        public frm_Data_Site OpenForm()
         {
             // Create a new instance of the Site class
             frm_Data_Site siteForm = new frm_Data_Site();

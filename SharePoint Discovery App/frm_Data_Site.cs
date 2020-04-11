@@ -141,7 +141,7 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        public static frm_Data_List OpenForm(string siteName, string siteUrl, string tag)
+        public frm_Data_List OpenForm(string siteName, string siteUrl, string tag)
         {
             // Create a new instance of the Site class
             frm_Data_List listForm = new frm_Data_List();
@@ -184,6 +184,9 @@ namespace SharePoint_Discovery_App
         {
             // Re-size columns
             ResizeColumns();
+
+            tip_Load_Views.SetToolTip(this.chk_Load_Views, "Tick to show the [View Count], [Default View] & [Site URL] columns (slower)");
+            tip_Load_Fields.SetToolTip(this.chk_Load_Fields, "Tick to show the [Field Count] column (slower)");
         }
     }
 }

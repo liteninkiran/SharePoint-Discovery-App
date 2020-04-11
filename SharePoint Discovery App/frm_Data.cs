@@ -95,6 +95,7 @@ namespace SharePoint_Discovery_App
                     {
                         case "System.Int32"   : dgv_Data[i, j].Value = Convert.ToInt32(list[i]);            break;
                         case "System.DateTime": dgv_Data[i, j].Value = Convert.ToDateTime(list[i]);         break;
+                        case "System.Boolean" : dgv_Data[i, j].Value = Convert.ToBoolean(list[i]);          break;
                         default               : dgv_Data[i, j].Value = list[i]; MessageBox.Show(valueType); break;
                     }
                 }

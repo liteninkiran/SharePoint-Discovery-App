@@ -135,6 +135,9 @@
     <EmbeddedResource Include="frm_Data.resx">
       <DependentUpon>frm_Data.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_Data_Field.resx">
+      <DependentUpon>frm_Data_Field.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_Data_List.resx">
       <DependentUpon>frm_Data_List.cs</DependentUpon>
     </EmbeddedResource>

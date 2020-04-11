@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lbl_Password = new System.Windows.Forms.Label();
             this.txt_Password = new System.Windows.Forms.TextBox();
             this.lbl_Username = new System.Windows.Forms.Label();
@@ -41,6 +42,8 @@
             this.chk_Recursive = new System.Windows.Forms.CheckBox();
             this.hsc_Limit = new System.Windows.Forms.HScrollBar();
             this.lbl_Limit = new System.Windows.Forms.Label();
+            this.tip_Recursive = new System.Windows.Forms.ToolTip(this.components);
+            this.tip_Limit = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lbl_Password
@@ -145,6 +148,8 @@
             // 
             this.chk_Recursive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chk_Recursive.AutoSize = true;
+            this.chk_Recursive.Checked = true;
+            this.chk_Recursive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_Recursive.Location = new System.Drawing.Point(72, 317);
             this.chk_Recursive.Name = "chk_Recursive";
             this.chk_Recursive.Size = new System.Drawing.Size(113, 17);
@@ -162,7 +167,6 @@
             this.hsc_Limit.Name = "hsc_Limit";
             this.hsc_Limit.Size = new System.Drawing.Size(319, 30);
             this.hsc_Limit.TabIndex = 11;
-            this.hsc_Limit.Value = 15;
             this.hsc_Limit.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsc_Limit_Scroll);
             // 
             // lbl_Limit
@@ -173,7 +177,7 @@
             this.lbl_Limit.Name = "lbl_Limit";
             this.lbl_Limit.Size = new System.Drawing.Size(319, 17);
             this.lbl_Limit.TabIndex = 12;
-            this.lbl_Limit.Text = "Retrieve 15 items";
+            this.lbl_Limit.Text = "Retrieve all items";
             this.lbl_Limit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frm_Main_Menu
@@ -217,5 +221,7 @@
         private System.Windows.Forms.CheckBox chk_Recursive;
         private System.Windows.Forms.HScrollBar hsc_Limit;
         private System.Windows.Forms.Label lbl_Limit;
+        private System.Windows.Forms.ToolTip tip_Recursive;
+        private System.Windows.Forms.ToolTip tip_Limit;
     }
 }

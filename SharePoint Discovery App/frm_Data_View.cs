@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using Microsoft.SharePoint.Client;
+using SP = Microsoft.SharePoint.Client;
 
 namespace SharePoint_Discovery_App
 {
@@ -37,7 +34,28 @@ namespace SharePoint_Discovery_App
         private void frm_Data_View_Load(object sender, EventArgs e)
         {
             // Re-size columns
-            ResizeColumns();
+            ResizeColumns("query");
+        }
+
+        private void cmd_Copy_Click(object sender, EventArgs e)
+        {
+            // Store selected row
+            int row = dgv_Data.SelectedCells[0].RowIndex;
+
+            // Store column of URL
+            int col = dgv_Data.Columns["query"].Index;
+
+            // Store query XML
+            string camlQuery = dgv_Data[col, row].Value.ToString();
+
+            // Try and tidy up
+            camlQuery = camlQuery.Replace("<", "\r\n<").Trim();
+
+            // Copy to clipboard
+            Clipboard.SetText(camlQuery);
+
+            // Inform user
+            MessageBox.Show("Copied to clipboard:\r\n\r\n" + camlQuery);
         }
     }
 }

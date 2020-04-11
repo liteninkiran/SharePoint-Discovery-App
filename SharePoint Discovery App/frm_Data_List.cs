@@ -29,8 +29,24 @@ namespace SharePoint_Discovery_App
             // Store site List Name
             string listName = dgv_Data[col, row].Value.ToString();
 
+            // Store column of Site URL
+            col = dgv_Data.Columns["url"].Index;
+
+            // Store site URL if it exists
+            string siteUrl = null;
+
+            // Store site URL
+            if (dgv_Data[col, row].Value != null)
+            {
+                siteUrl = dgv_Data[col, row].Value.ToString();
+            }
+            else
+            {
+                siteUrl = dgv_Data.Tag.ToString();
+            }
+
             // Open the List form
-            frm_Data_View viewForm = OpenForm_View(listName, this.Name, this.lbl_Header.Tag.ToString());
+            frm_Data_View viewForm = OpenForm_View(listName, this.Name, this.lbl_Header.Tag.ToString(), siteUrl);
 
             // Store column of GUID
             col = dgv_Data.Columns["listId"].Index;
@@ -47,7 +63,45 @@ namespace SharePoint_Discovery_App
 
         private void cmd_Get_Fields_Click(object sender, EventArgs e)
         {
+            // Store selected row
+            int row = dgv_Data.SelectedCells[0].RowIndex;
 
+            // Store column of List Name
+            int col = dgv_Data.Columns["listName"].Index;
+
+            // Store site List Name
+            string listName = dgv_Data[col, row].Value.ToString();
+
+            // Store column of Site URL
+            col = dgv_Data.Columns["url"].Index;
+
+            // Store site URL if it exists
+            string siteUrl = null;
+
+            // Store site URL
+            if (dgv_Data[col, row].Value != null)
+            {
+                siteUrl = dgv_Data[col, row].Value.ToString();
+            }
+            else
+            {
+                siteUrl = dgv_Data.Tag.ToString();
+            }
+
+            // Open the List form
+            frm_Data_Field fieldForm = OpenForm_Field(listName, this.Name, this.lbl_Header.Tag.ToString(), siteUrl);
+
+            // Store column of GUID
+            col = dgv_Data.Columns["listId"].Index;
+
+            // Store site GUID
+            string listId = dgv_Data[col, row].Value.ToString();
+
+            // Add records to the data grid
+            AddFields(fieldForm, listId);
+
+            // Show the List form
+            fieldForm.Show();
         }
 
         private void AddViews(frm_Data_View viewForm, string listId)
@@ -80,7 +134,42 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        public static frm_Data_View OpenForm_View(string listName, string tag, string subSiteName)
+        private void AddFields(frm_Data_Field fieldForm, string listId)
+        {
+            Guid g = new Guid(listId);
+
+            SP.ClientContext clientContext = SharePoint.GetClient(dgv_Data.Tag.ToString(), frm_Main_Menu.username, frm_Main_Menu.password);
+            SP.List oList = clientContext.Web.Lists.GetById(g);
+
+            // Load in the Views
+            clientContext.Load(oList.Fields);
+            clientContext.ExecuteQuery();
+
+            int i = 0;
+
+            foreach (SP.Field oField in oList.Fields)
+            {
+                i++;
+
+                string fieldName = oField.Title;
+                string fieldType = oField.TypeAsString;
+                string defaultValue = oField.DefaultValue;
+                string enforceUniqueValues = oField.EnforceUniqueValues.ToString();
+                string required = oField.Required.ToString();
+                string readOnly = oField.ReadOnlyField.ToString();
+                string formula = null;
+
+                if (oField.TypeAsString == "Calculated")
+                {
+                    FieldCalculated calcField = (FieldCalculated)oField;
+                    formula = calcField.Formula;
+                }
+
+                fieldForm.AddRow(i, fieldName, fieldType, enforceUniqueValues, required, readOnly, defaultValue, formula);
+            }
+        }
+
+        public frm_Data_View OpenForm_View(string listName, string tag, string subSiteName, string siteUrl)
         {
             // Create a new instance of the Site class
             frm_Data_View viewForm = new frm_Data_View();
@@ -88,7 +177,7 @@ namespace SharePoint_Discovery_App
             viewForm.Height = 700;
             viewForm.Width = 1500;
 
-            viewForm.Text = "";
+            viewForm.Text = siteUrl;
             viewForm.lbl_Header.Text = "Views - " + listName + " (" + subSiteName + ")";
             viewForm.Tag = tag;
 
@@ -96,6 +185,24 @@ namespace SharePoint_Discovery_App
             viewForm.AddColumns();
 
             return viewForm;
+        }
+
+        public frm_Data_Field OpenForm_Field(string listName, string tag, string subSiteName, string siteUrl)
+        {
+            // Create a new instance of the Site class
+            frm_Data_Field fieldForm = new frm_Data_Field();
+
+            fieldForm.Height = 700;
+            fieldForm.Width = 1500;
+
+            fieldForm.Text = siteUrl;
+            fieldForm.lbl_Header.Text = "Fields - " + listName + " (" + subSiteName + ")";
+            fieldForm.Tag = tag;
+
+            // Add columns to the data grid view
+            fieldForm.AddColumns();
+
+            return fieldForm;
         }
 
         public void AddColumns()
