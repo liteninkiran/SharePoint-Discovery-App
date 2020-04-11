@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Security;
 using System.Windows.Forms;
 using Microsoft.SharePoint.Client;
-using SP = Microsoft.SharePoint.Client;
 
 namespace SharePoint_Discovery_App
 {
@@ -35,9 +33,6 @@ namespace SharePoint_Discovery_App
             // Exit if we got an error
             if (clientContext == null){return;}
 
-            // Update button caption as it will take a while to load all sites/sub-sites
-            ChangeButton(true);
-
             // Open the Site form
             frm_Data_Site siteForm = OpenForm();
 
@@ -46,9 +41,6 @@ namespace SharePoint_Discovery_App
 
             // Show the Site form
             siteForm.ShowDialog();
-
-            // Change the button caption back
-            ChangeButton(false);
         }
 
         private void cmd_Close_Click(object sender, EventArgs e)
@@ -62,20 +54,6 @@ namespace SharePoint_Discovery_App
             siteUrl = txt_Site.Text;
             username = txt_Username.Text;
             password = txt_Password.Text;
-        }
-
-        private void ChangeButton(bool start)
-        {
-            if(start)
-            {
-                this.cmd_Get_Sites.Width = 200;
-                this.cmd_Get_Sites.Text = "Getting sites. Please wait...";
-            }
-            else
-            {
-                this.cmd_Get_Sites.Text = "Get Sites";
-                this.cmd_Get_Sites.Width = 100;
-            }
         }
 
         public static frm_Data_Site OpenForm()
@@ -132,8 +110,7 @@ namespace SharePoint_Discovery_App
             int i = siteForm.dgv_Data.RowCount + 1;
 
             // Add row to data grid view
-            siteForm.AddRow(i.ToString(), web.Title, null, web.Lists.Count.ToString(), web.Url);
-            //siteForm.AddRow(i.ToString(), web.Title, null, "-", web.Url);
+            siteForm.AddRow(i.ToString(), web.Title, null, web.Lists.Count.ToString(), web.Created, web.Url);
 
             // Loop through sub-sites
             GetSubSites(clientContext, web, siteForm, recursive);
@@ -159,9 +136,14 @@ namespace SharePoint_Discovery_App
                     // Store the data grid view's row count
                     int i = siteForm.dgv_Data.RowCount + 1;
 
+                    // Check to see if we have exceeded the limit
+                    if(siteForm.dgv_Data.RowCount >= hsc_Limit.Value && hsc_Limit.Value != 0)
+                    {
+                        return;
+                    }
+
                     // Add row to data grid view
-                    siteForm.AddRow(i.ToString(), subWeb.Title, web.Title, web.Lists.Count.ToString(), subWeb.Url);
-                    //siteForm.AddRow(i.ToString(), subWeb.Title, web.Title, "-", subWeb.Url);
+                    siteForm.AddRow(i.ToString(), subWeb.Title, web.Title, web.Lists.Count.ToString(), web.Created, subWeb.Url);
 
                     // Loop through sub-sites
                     if (recursive)
@@ -171,6 +153,31 @@ namespace SharePoint_Discovery_App
                 }
             }
         }
-        
+
+        private void hsc_Limit_Scroll(object sender, ScrollEventArgs e)
+        {
+            string item = null;
+            string quantity = null;
+
+            if(hsc_Limit.Value == 1)
+            {
+                item = " item";
+            }
+            else
+            {
+                item = " items";
+            }
+
+            if (hsc_Limit.Value == 0)
+            {
+                quantity = "all";
+            }
+            else
+            {
+                quantity = hsc_Limit.Value.ToString();
+            }
+
+            lbl_Limit.Text = "Retrieve " + quantity + item;
+        }
     }
 }

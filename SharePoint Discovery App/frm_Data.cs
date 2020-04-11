@@ -22,18 +22,18 @@ namespace SharePoint_Discovery_App
             this.Close();
         }
 
-        private void frm_Data_Load(object sender, EventArgs e)
-        {
-            ResizeColumns();
-        }
-
-        public void ResizeColumns()
+        public void ResizeColumns(params string[] list)
         {
             // Auto-size columns
             foreach (DataGridViewColumn col in dgv_Data.Columns)
             {
-                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; col.Width = col.Width + 10;
-                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                bool exclude = Array.Exists(list, s => s.Equals(col.Name));
+
+                if(exclude == false)
+                {
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; col.Width = col.Width + 10;
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                }
             }
         }
 
@@ -69,7 +69,7 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        public void AddRow(params string[] list)
+        public void AddRow(params object[] list)
         {
             // Store the row count
             int j = dgv_Data.RowCount;
@@ -80,8 +80,24 @@ namespace SharePoint_Discovery_App
             // Loop through array to get values
             for (int i = 0; i < list.Length; i++)
             {
-                // Enter the value
-                dgv_Data[i, j].Value = list[i];
+                if(dgv_Data.Columns[i].ValueType == null)
+                {
+                    // We did not assign a value type. String is assumed.
+                    dgv_Data[i, j].Value = list[i];
+                }
+                else
+                {
+                    // Store the value type
+                    string valueType = dgv_Data.Columns[i].ValueType.ToString();
+
+                    // Decide how to convert the string
+                    switch (valueType)
+                    {
+                        case "System.Int32"   : dgv_Data[i, j].Value = Convert.ToInt32(list[i]);            break;
+                        case "System.DateTime": dgv_Data[i, j].Value = Convert.ToDateTime(list[i]);         break;
+                        default               : dgv_Data[i, j].Value = list[i]; MessageBox.Show(valueType); break;
+                    }
+                }
             }
         }
     }

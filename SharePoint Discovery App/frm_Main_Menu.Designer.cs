@@ -39,6 +39,8 @@
             this.lbl_Header = new System.Windows.Forms.Label();
             this.lbl_Credentials = new System.Windows.Forms.Label();
             this.chk_Recursive = new System.Windows.Forms.CheckBox();
+            this.hsc_Limit = new System.Windows.Forms.HScrollBar();
+            this.lbl_Limit = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_Password
@@ -150,11 +152,37 @@
             this.chk_Recursive.Text = "Search recursively";
             this.chk_Recursive.UseVisualStyleBackColor = true;
             // 
+            // hsc_Limit
+            // 
+            this.hsc_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hsc_Limit.LargeChange = 1;
+            this.hsc_Limit.Location = new System.Drawing.Point(197, 340);
+            this.hsc_Limit.Maximum = 15;
+            this.hsc_Limit.Name = "hsc_Limit";
+            this.hsc_Limit.Size = new System.Drawing.Size(319, 30);
+            this.hsc_Limit.TabIndex = 11;
+            this.hsc_Limit.Value = 15;
+            this.hsc_Limit.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsc_Limit_Scroll);
+            // 
+            // lbl_Limit
+            // 
+            this.lbl_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_Limit.Location = new System.Drawing.Point(197, 317);
+            this.lbl_Limit.Name = "lbl_Limit";
+            this.lbl_Limit.Size = new System.Drawing.Size(319, 17);
+            this.lbl_Limit.TabIndex = 12;
+            this.lbl_Limit.Text = "Retrieve 15 items";
+            this.lbl_Limit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frm_Main_Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 382);
+            this.Controls.Add(this.lbl_Limit);
+            this.Controls.Add(this.hsc_Limit);
             this.Controls.Add(this.chk_Recursive);
             this.Controls.Add(this.lbl_Credentials);
             this.Controls.Add(this.lbl_Header);
@@ -187,5 +215,7 @@
         private System.Windows.Forms.Label lbl_Header;
         private System.Windows.Forms.Label lbl_Credentials;
         private System.Windows.Forms.CheckBox chk_Recursive;
+        private System.Windows.Forms.HScrollBar hsc_Limit;
+        private System.Windows.Forms.Label lbl_Limit;
     }
 }

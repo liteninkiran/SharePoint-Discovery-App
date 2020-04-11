@@ -18,18 +18,35 @@ namespace SharePoint_Discovery_App
             lnk.Name = "url";
             lnk.UseColumnTextForLinkValue = false;
 
-            dgv_Data.Columns.Add("listNumber", "Number");
-            dgv_Data.Columns.Add("listName", "List Name");
-            dgv_Data.Columns.Add("baseType", "Type");
-            dgv_Data.Columns.Add("defaultView", "Default View");
-            dgv_Data.Columns.Add("fieldCount", "Field Count");
-            dgv_Data.Columns.Add("viewCount", "View Count");
-            dgv_Data.Columns.Add("itemCount", "Item Count");
-            dgv_Data.Columns.Add("listId", "GUID");
-            dgv_Data.Columns.Add("description", "Description");
-            dgv_Data.Columns.Add("created", "Created");
-            dgv_Data.Columns.Add(lnk);
+            DataGridViewColumn col = null;
+
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("listName", "List Name")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("description", "Description")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("baseType", "Type")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("defaultView", "Default View")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldCount", "Field Count")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("viewCount", "View Count")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("itemCount", "Item Count")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("listId", "GUID")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("created", "Created")]; col.ValueType = typeof(DateTime);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add(lnk)];
         }
 
+        private void frm_Data_List_Load(object sender, EventArgs e)
+        {
+            // Re-size columns
+            ResizeColumns("description");
+        }
+
+        private void cmd_Get_Views_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmd_Get_Fields_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

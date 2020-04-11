@@ -97,7 +97,6 @@
             this.Name = "frm_Data";
             this.Text = "Form Caption";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_Data_FormClosing);
-            this.Load += new System.EventHandler(this.frm_Data_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).EndInit();
             this.ResumeLayout(false);
 

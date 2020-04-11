@@ -41,6 +41,7 @@
             this.cmd_Get_Fields.TabIndex = 24;
             this.cmd_Get_Fields.Text = "Get Fields";
             this.cmd_Get_Fields.UseVisualStyleBackColor = true;
+            this.cmd_Get_Fields.Click += new System.EventHandler(this.cmd_Get_Fields_Click);
             // 
             // cmd_Get_Views
             // 
@@ -51,6 +52,7 @@
             this.cmd_Get_Views.TabIndex = 23;
             this.cmd_Get_Views.Text = "Get Views";
             this.cmd_Get_Views.UseVisualStyleBackColor = true;
+            this.cmd_Get_Views.Click += new System.EventHandler(this.cmd_Get_Views_Click);
             // 
             // frm_Data_List
             // 
@@ -59,6 +61,7 @@
             this.Controls.Add(this.cmd_Get_Fields);
             this.Controls.Add(this.cmd_Get_Views);
             this.Name = "frm_Data_List";
+            this.Load += new System.EventHandler(this.frm_Data_List_Load);
             this.Controls.SetChildIndex(this.lbl_Header, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Views, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Fields, 0);

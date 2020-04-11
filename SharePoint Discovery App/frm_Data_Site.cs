@@ -39,6 +39,68 @@ namespace SharePoint_Discovery_App
             listForm.Show();
         }
 
+        private void SetViewVars(ClientContext clientContext, SP.List oList, DataGridView dgv_Data, ref string defaultViewUrl, ref string defaultViewTitle, ref string viewCount)
+        {
+            if (chk_Load_Views.Checked == true)
+            {
+                clientContext.Load(oList.Views);
+                clientContext.Load(oList.DefaultView);
+                clientContext.ExecuteQuery();
+
+                viewCount = oList.Views.Count.ToString();
+
+                try
+                {
+                    SP.View defaultView = oList.DefaultView;
+
+                    defaultViewTitle = defaultView.Title;
+                    defaultViewUrl = frm_Main_Menu.siteUrl + defaultView.ServerRelativeUrl;
+                }
+                catch (Exception ex)
+                {
+                    defaultViewTitle = "";
+                }
+            }
+            else
+            {
+                dgv_Data.Columns["defaultView"].Visible = false;
+                dgv_Data.Columns["viewCount"].Visible = false;
+                dgv_Data.Columns["url"].Visible = false;
+            }
+        }
+
+        private void SetFieldVars(ClientContext clientContext, SP.List oList, DataGridView dgv_Data, ref string fieldCount)
+        {
+            if (chk_Load_Fields.Checked == true)
+            {
+                clientContext.Load(oList.Fields);
+                clientContext.ExecuteQuery();
+                fieldCount = oList.Fields.Count.ToString();
+            }
+            else
+            {
+                dgv_Data.Columns["fieldCount"].Visible = false;
+            }
+        }
+
+        private string GetBaseTypeDescription(SP.BaseType baseType)
+        {
+            string listType = null;
+
+            switch ((int)baseType)
+            {
+                case -1: listType = "None"; break;
+                case  0: listType = "List"; break;
+                case  1: listType = "Document Library"; break;
+                case  2: listType = "Unused"; break;
+                case  3: listType = "Discussion Board"; break;
+                case  4: listType = "Survey"; break;
+                case  5: listType = "Issue"; break;
+            }
+
+            return listType;
+        }
+
         private void AddLists(string siteUrl, frm_Data_List listForm)
         {
             ClientContext clientContext = SharePoint.GetClient(siteUrl, frm_Main_Menu.username, frm_Main_Menu.password);
@@ -54,44 +116,10 @@ namespace SharePoint_Discovery_App
                 string viewCount = null;
                 string fieldCount = null;
                 string itemCount = oList.ItemCount.ToString();
+                string listType = GetBaseTypeDescription(oList.BaseType);
 
-                if (chk_Load_Fields.Checked == true)
-                {
-                    clientContext.Load(oList.Fields);
-                    clientContext.ExecuteQuery();
-                    fieldCount = oList.Fields.Count.ToString();
-                }
-                else
-                {
-                    listForm.dgv_Data.Columns["fieldCount"].Visible = false;
-                }
-
-                if (chk_Load_Views.Checked == true)
-                {
-                    clientContext.Load(oList.Views);
-                    clientContext.Load(oList.DefaultView);
-                    clientContext.ExecuteQuery();
-
-                    viewCount = oList.Views.Count.ToString();
-
-                    try
-                    {
-                        SP.View defaultView = oList.DefaultView;
-
-                        defaultViewTitle = defaultView.Title;
-                        defaultViewUrl = frm_Main_Menu.siteUrl + defaultView.ServerRelativeUrl;
-                    }
-                    catch (Exception ex)
-                    {
-                        defaultViewTitle = "";
-                    }
-                }
-                else
-                {
-                    listForm.dgv_Data.Columns["defaultView"].Visible = false;
-                    listForm.dgv_Data.Columns["viewCount"].Visible = false;
-                    listForm.dgv_Data.Columns["url"].Visible = false;
-                }
+                SetFieldVars(clientContext, oList, listForm.dgv_Data, ref fieldCount);
+                SetViewVars(clientContext, oList, listForm.dgv_Data, ref defaultViewUrl, ref defaultViewTitle, ref viewCount);
 
                 // Increment counter
                 i++;
@@ -100,17 +128,16 @@ namespace SharePoint_Discovery_App
                     (
                         i.ToString(),
                         oList.Title,
-                        oList.BaseType.ToString(),
+                        oList.Description,
+                        listType,
                         defaultViewTitle,
                         fieldCount,
                         viewCount,
                         itemCount,
                         oList.Id.ToString(),
-                        oList.Description,
                         oList.Created.ToString(),
                         defaultViewUrl
                     );
-
             }
         }
 
@@ -131,13 +158,8 @@ namespace SharePoint_Discovery_App
 
             // Add columns to the data grid view
             listForm.AddColumns();
-
-            return listForm;
-        }
-
-        private void frm_Data_Site_Load(object sender, EventArgs e)
-        {
             
+            return listForm;
         }
 
         public void AddColumns()
@@ -148,12 +170,21 @@ namespace SharePoint_Discovery_App
             lnk.Name = "url";
             lnk.UseColumnTextForLinkValue = false;
 
+            DataGridViewColumn col = null;
+
             // Add columns
-            dgv_Data.Columns.Add("siteNumber", "Number");
-            dgv_Data.Columns.Add("title", "Title");
-            dgv_Data.Columns.Add("parent", "Parent Site");
-            dgv_Data.Columns.Add("listCount", "List Count");
-            dgv_Data.Columns.Add(lnk);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("title", "Title")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("parent", "Parent Site")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("listCount", "List Count")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("created", "Created")]; col.ValueType = typeof(DateTime);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add(lnk)];
+        }
+
+        private void frm_Data_Site_Load(object sender, EventArgs e)
+        {
+            // Re-size columns
+            ResizeColumns();
         }
     }
 }
