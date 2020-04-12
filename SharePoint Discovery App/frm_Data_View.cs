@@ -27,6 +27,7 @@ namespace SharePoint_Discovery_App
             col = dgv_Data.Columns[dgv_Data.Columns.Add("viewName", "Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldCount", "Field Count")]; col.ValueType = typeof(int);
             col = dgv_Data.Columns[dgv_Data.Columns.Add("rowLimit", "Row Limit")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("viewId", "GUID")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("query", "Query")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add(lnk)];
         }

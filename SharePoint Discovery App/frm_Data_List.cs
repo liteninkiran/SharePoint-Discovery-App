@@ -125,12 +125,13 @@ namespace SharePoint_Discovery_App
                 clientContext.ExecuteQuery();
 
                 string viewName = oView.Title;
+                string viewId = oView.Id.ToString();
                 string fieldCount = oView.ViewFields.Count.ToString();
                 string rowLimit = oView.RowLimit.ToString();
                 string viewQuery = oView.ViewQuery;
                 string url = frm_Main_Menu.siteUrl + oView.ServerRelativeUrl;
 
-                viewForm.AddRow(i, viewName, fieldCount, rowLimit, viewQuery, url);
+                viewForm.AddRow(i, viewName, fieldCount, rowLimit, viewId, viewQuery, url);
             }
         }
 
@@ -216,6 +217,7 @@ namespace SharePoint_Discovery_App
             DataGridViewColumn col = null;
 
             col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("siteName", "Site Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("listName", "List Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("description", "Description")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("baseType", "Type")];

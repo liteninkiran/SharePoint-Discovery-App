@@ -116,10 +116,10 @@ namespace SharePoint_Discovery_App
             siteForm.AddRow(i.ToString(), web.Title, null, web.Lists.Count.ToString(), web.Created, web.Url);
 
             // Loop through sub-sites
-            GetSubSites(clientContext, web, siteForm, recursive);
+            GetSubSites(clientContext, web, siteForm, recursive, null);
         }
 
-        private void GetSubSites(ClientContext clientContext, Web web, frm_Data_Site siteForm, bool recursive)
+        private void GetSubSites(ClientContext clientContext, Web web, frm_Data_Site siteForm, bool recursive, string parent)
         {
             // Load objects
             clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
@@ -145,14 +145,29 @@ namespace SharePoint_Discovery_App
                         return;
                     }
 
+                    // Store full path of parent
+                    string parentNew = null;
+
+                    // If the incoming parent variable is null, we are at the top
+                    if(parent != null)
+                    {
+                        // New parent is incoming parent with the (parent) web title
+                        parentNew = parent + " --> " + web.Title;
+                    }
+                    else
+                    {
+                        // New parent is just the (parent) web title
+                        parentNew = web.Title;
+                    }
+
                     // Add row to data grid view
-                    siteForm.AddRow(i.ToString(), subWeb.Title, web.Title, web.Lists.Count.ToString(), web.Created, subWeb.Url);
+                    siteForm.AddRow(i.ToString(), subWeb.Title, parentNew, web.Lists.Count.ToString(), web.Created, subWeb.Url);
 
                     // Loop through sub-sites
                     if (recursive)
                     {
-                        GetSubSites(clientContext, subWeb, siteForm, recursive);
-                    }                    
+                        GetSubSites(clientContext, subWeb, siteForm, recursive, parentNew);
+                    }
                 }
             }
         }

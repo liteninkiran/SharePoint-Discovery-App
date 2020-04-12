@@ -24,16 +24,25 @@ namespace SharePoint_Discovery_App
             string siteUrl = dgv_Data[col, row].Value.ToString();
 
             // Store column of Site Name
-            col = dgv_Data.Columns["siteName"].Index;
+            col = dgv_Data.Columns["parent"].Index;
 
             // Store site name
             string siteName = dgv_Data[col, row].Value.ToString();
 
+            // Store column of Site Name
+            col = dgv_Data.Columns["siteName"].Index;
+
+            // Store site name
+            siteName += " --> " + dgv_Data[col, row].Value.ToString();
+
             // Open the List form
             frm_Data_List listForm = OpenForm(siteName, siteUrl, this.Name);
 
+            // Hide the Site Name column
+            listForm.dgv_Data.Columns["siteName"].Visible = false;
+
             // Get lists
-            AddLists(siteUrl, listForm);
+            AddLists(siteName, siteUrl, listForm);
 
             // Show the List form
             listForm.Show();
@@ -101,7 +110,7 @@ namespace SharePoint_Discovery_App
             return listType;
         }
 
-        private void AddLists(string siteUrl, frm_Data_List listForm)
+        private void AddLists(string siteName, string siteUrl, frm_Data_List listForm)
         {
             ClientContext clientContext = SharePoint.GetClient(siteUrl, frm_Main_Menu.username, frm_Main_Menu.password);
             ListCollection collList = SharePoint.GetLists(clientContext);
@@ -127,6 +136,7 @@ namespace SharePoint_Discovery_App
                 listForm.AddRow
                     (
                         i.ToString(),
+                        siteName,
                         oList.Title,
                         oList.Description,
                         listType,
