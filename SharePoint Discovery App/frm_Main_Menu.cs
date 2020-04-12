@@ -101,7 +101,7 @@ namespace SharePoint_Discovery_App
             Web web = clientContext.Web;
 
             // Load objects
-            clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
+            //clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
 
             // Load lists
             clientContext.Load(web.Lists);

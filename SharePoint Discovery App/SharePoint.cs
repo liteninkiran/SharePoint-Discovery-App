@@ -16,6 +16,30 @@ namespace SharePoint_Discovery_App
             return GetLists(clientContext, ref errorMessage);
         }
 
+        public static ListCollection GetListByGuid(ClientContext clientContext, ref string errorMessage)
+        {
+            // Define empty collection
+            ListCollection collList = null;
+
+            try
+            {
+                // Store lists in a collection
+                collList = clientContext.Web.Lists;
+
+                // Retreive lists
+                clientContext.Load(collList);
+
+                clientContext.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                errorMessage = e.Message;
+                return null;
+            }
+
+            return collList;
+        }
+
         public static ListCollection GetLists(ClientContext clientContext, ref string errorMessage)
         {
             // Define empty collection

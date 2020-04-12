@@ -29,6 +29,12 @@ namespace SharePoint_Discovery_App
             // Store site List Name
             string listName = dgv_Data[col, row].Value.ToString();
 
+            // Store column of Site Address
+            col = dgv_Data.Columns["siteAddress"].Index;
+
+            // Store column of Site Address
+            string siteAddress = dgv_Data[col, row].Value.ToString();
+
             // Store column of Site URL
             col = dgv_Data.Columns["url"].Index;
 
@@ -42,7 +48,7 @@ namespace SharePoint_Discovery_App
             }
             else
             {
-                siteUrl = dgv_Data.Tag.ToString();
+                siteUrl = siteAddress;
             }
 
             // Open the List form
@@ -55,7 +61,7 @@ namespace SharePoint_Discovery_App
             string listId = dgv_Data[col, row].Value.ToString();
 
             // Add records to the data grid
-            AddViews(viewForm, listId);
+            AddViews(viewForm, listId, siteAddress);
 
             // Show the List form
             viewForm.Show();
@@ -72,6 +78,12 @@ namespace SharePoint_Discovery_App
             // Store site List Name
             string listName = dgv_Data[col, row].Value.ToString();
 
+            // Store column of Site Address
+            col = dgv_Data.Columns["siteAddress"].Index;
+
+            // Store column of Site Address
+            string siteAddress = dgv_Data[col, row].Value.ToString();
+
             // Store column of Site URL
             col = dgv_Data.Columns["url"].Index;
 
@@ -85,7 +97,7 @@ namespace SharePoint_Discovery_App
             }
             else
             {
-                siteUrl = dgv_Data.Tag.ToString();
+                siteUrl = siteAddress;
             }
 
             // Open the List form
@@ -98,17 +110,17 @@ namespace SharePoint_Discovery_App
             string listId = dgv_Data[col, row].Value.ToString();
 
             // Add records to the data grid
-            AddFields(fieldForm, listId);
+            AddFields(fieldForm, listId, siteAddress);
 
             // Show the List form
             fieldForm.Show();
         }
 
-        private void AddViews(frm_Data_View viewForm, string listId)
+        private void AddViews(frm_Data_View viewForm, string listId, string siteAddress)
         {
             Guid g = new Guid(listId);
 
-            SP.ClientContext clientContext = SharePoint.GetClient(dgv_Data.Tag.ToString(), frm_Main_Menu.username, frm_Main_Menu.password);
+            SP.ClientContext clientContext = SharePoint.GetClient(siteAddress, frm_Main_Menu.username, frm_Main_Menu.password);
             SP.List oList = clientContext.Web.Lists.GetById(g);
 
             // Load in the Views
@@ -135,11 +147,11 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        private void AddFields(frm_Data_Field fieldForm, string listId)
+        private void AddFields(frm_Data_Field fieldForm, string listId, string siteAddress)
         {
             Guid g = new Guid(listId);
 
-            SP.ClientContext clientContext = SharePoint.GetClient(dgv_Data.Tag.ToString(), frm_Main_Menu.username, frm_Main_Menu.password);
+            SP.ClientContext clientContext = SharePoint.GetClient(siteAddress, frm_Main_Menu.username, frm_Main_Menu.password);
             SP.List oList = clientContext.Web.Lists.GetById(g);
 
             // Load in the Views
@@ -164,6 +176,12 @@ namespace SharePoint_Discovery_App
                 {
                     FieldCalculated calcField = (FieldCalculated)oField;
                     formula = calcField.Formula;
+                }
+
+                if (oField.TypeAsString == "Computed")
+                {
+                    //FieldComputed calcField = (FieldComputed)oField;
+                    //formula = calcField.SchemaXml;
                 }
 
                 fieldForm.AddRow(i, fieldName, fieldType, enforceUniqueValues, required, readOnly, defaultValue, formula);
@@ -218,6 +236,7 @@ namespace SharePoint_Discovery_App
 
             col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
             col = dgv_Data.Columns[dgv_Data.Columns.Add("siteName", "Site Name")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("siteAddress", "Site Address")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("listName", "List Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("description", "Description")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("baseType", "Type")];
