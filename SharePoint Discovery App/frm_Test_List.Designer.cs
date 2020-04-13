@@ -38,19 +38,22 @@
             this.lbl_Row_Limit = new System.Windows.Forms.Label();
             this.nud_Row_Limit = new System.Windows.Forms.NumericUpDown();
             this.cmd_Excel = new System.Windows.Forms.Button();
+            this.lbl_Summary = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Row_Limit)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv_List
             // 
+            this.dgv_List.AllowUserToAddRows = false;
+            this.dgv_List.AllowUserToDeleteRows = false;
             this.dgv_List.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_List.Location = new System.Drawing.Point(12, 51);
             this.dgv_List.Name = "dgv_List";
-            this.dgv_List.Size = new System.Drawing.Size(650, 321);
+            this.dgv_List.Size = new System.Drawing.Size(650, 304);
             this.dgv_List.TabIndex = 0;
             // 
             // cmd_Close
@@ -158,11 +161,21 @@
             this.cmd_Excel.UseVisualStyleBackColor = true;
             this.cmd_Excel.Click += new System.EventHandler(this.cmd_Excel_Click);
             // 
+            // lbl_Summary
+            // 
+            this.lbl_Summary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbl_Summary.AutoSize = true;
+            this.lbl_Summary.Location = new System.Drawing.Point(12, 366);
+            this.lbl_Summary.Name = "lbl_Summary";
+            this.lbl_Summary.Size = new System.Drawing.Size(0, 13);
+            this.lbl_Summary.TabIndex = 27;
+            // 
             // frm_Test_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 450);
+            this.Controls.Add(this.lbl_Summary);
             this.Controls.Add(this.cmd_Excel);
             this.Controls.Add(this.nud_Row_Limit);
             this.Controls.Add(this.lbl_Row_Limit);
@@ -195,5 +208,6 @@
         public System.Windows.Forms.TextBox txt_Url;
         public System.Windows.Forms.TextBox txt_Guid;
         private System.Windows.Forms.Button cmd_Excel;
+        private System.Windows.Forms.Label lbl_Summary;
     }
 }
