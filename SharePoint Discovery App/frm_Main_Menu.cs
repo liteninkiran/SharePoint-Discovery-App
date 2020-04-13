@@ -22,7 +22,7 @@ namespace SharePoint_Discovery_App
             txt_Password.Text = "password";
 
             tip_Recursive.SetToolTip(this.chk_Recursive, "Uncheck to search sub-sites 1 layer deep (quicker). Check to recursively search all sites (slower).");
-            tip_Limit.SetToolTip(this.hsc_Limit, "Limit the number of sub-sites retrieved (quicker). Set to zero to retreive all sub-sites (slower).");
+            tip_Limit.SetToolTip(this.nud_Limit, "Limit the number of sub-sites retrieved (quicker). Set to zero to retreive all sub-sites (slower).");
         }
 
         private void cmd_Get_Sites_Click(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace SharePoint_Discovery_App
                     int i = siteForm.dgv_Data.RowCount + 1;
 
                     // Check to see if we have exceeded the limit
-                    if(siteForm.dgv_Data.RowCount >= hsc_Limit.Value && hsc_Limit.Value != 0)
+                    if(siteForm.dgv_Data.RowCount >= nud_Limit.Value && nud_Limit.Value != 0)
                     {
                         return;
                     }
@@ -172,12 +172,12 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        private void hsc_Limit_Scroll(object sender, ScrollEventArgs e)
+        private void UpdateLabel()
         {
             string item = null;
             string quantity = null;
 
-            if(hsc_Limit.Value == 1)
+            if(nud_Limit.Value == 1)
             {
                 item = " item";
             }
@@ -186,16 +186,28 @@ namespace SharePoint_Discovery_App
                 item = " items";
             }
 
-            if (hsc_Limit.Value == 0)
+            if (nud_Limit.Value == 0)
             {
                 quantity = "all";
             }
             else
             {
-                quantity = hsc_Limit.Value.ToString();
+                quantity = nud_Limit.Value.ToString();
             }
 
             lbl_Limit.Text = "Retrieve " + quantity + item;
+        }
+
+        private void btn_Test_List_Click(object sender, EventArgs e)
+        {
+            SetStaticVars();
+            frm_Test_List testForm = new frm_Test_List();
+            testForm.Show();
+        }
+
+        private void nud_Limit_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateLabel();
         }
     }
 }

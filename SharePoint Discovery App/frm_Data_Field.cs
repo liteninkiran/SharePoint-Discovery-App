@@ -17,6 +17,7 @@ namespace SharePoint_Discovery_App
             DataGridViewCheckBoxColumn chkRequired = GetCheckColumn("required", "Required");
             DataGridViewCheckBoxColumn chkReadOnly = GetCheckColumn("readOnly", "Read Only");
             DataGridViewCheckBoxColumn chkUnique = GetCheckColumn("enforceUniqueValues", "Unique");
+            DataGridViewCheckBoxColumn chkSealed = GetCheckColumn("sealed", "Sealed");
 
             // Add columns
             col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
@@ -26,6 +27,7 @@ namespace SharePoint_Discovery_App
             col = dgv_Data.Columns[dgv_Data.Columns.Add(chkUnique)];
             col = dgv_Data.Columns[dgv_Data.Columns.Add(chkRequired)];
             col = dgv_Data.Columns[dgv_Data.Columns.Add(chkReadOnly)];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add(chkSealed)];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("defaultValue", "Default Value")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("formula", "Formula")];
         }

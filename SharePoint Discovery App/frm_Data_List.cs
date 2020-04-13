@@ -154,7 +154,7 @@ namespace SharePoint_Discovery_App
             SP.ClientContext clientContext = SharePoint.GetClient(siteAddress, frm_Main_Menu.username, frm_Main_Menu.password);
             SP.List oList = clientContext.Web.Lists.GetById(g);
 
-            // Load in the Views
+            // Load in the Fields
             clientContext.Load(oList.Fields);
             clientContext.ExecuteQuery();
 
@@ -170,6 +170,7 @@ namespace SharePoint_Discovery_App
                 string enforceUniqueValues = oField.EnforceUniqueValues.ToString();
                 string required = oField.Required.ToString();
                 string readOnly = oField.ReadOnlyField.ToString();
+                string isSealed = oField.Sealed.ToString();
 
                 // These 2 attributes will depend on the field type
                 string maxLength = null;
@@ -211,7 +212,8 @@ namespace SharePoint_Discovery_App
                     maxLength, 
                     enforceUniqueValues, 
                     required, 
-                    readOnly, 
+                    readOnly,
+                    isSealed,
                     defaultValue, 
                     formula
                 );

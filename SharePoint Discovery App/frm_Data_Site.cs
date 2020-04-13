@@ -30,6 +30,9 @@ namespace SharePoint_Discovery_App
 
         private void GetListByNameOrGuid(string listGuid, string listName)
         {
+            txt_Guid.Text = "";
+            txt_Name.Text = "";
+
             // Store loop counter for rows added to the data grid view
             int i = 0;
 

@@ -40,10 +40,12 @@
             this.lbl_Header = new System.Windows.Forms.Label();
             this.lbl_Credentials = new System.Windows.Forms.Label();
             this.chk_Recursive = new System.Windows.Forms.CheckBox();
-            this.hsc_Limit = new System.Windows.Forms.HScrollBar();
             this.lbl_Limit = new System.Windows.Forms.Label();
             this.tip_Recursive = new System.Windows.Forms.ToolTip(this.components);
             this.tip_Limit = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_Test_List = new System.Windows.Forms.Button();
+            this.nud_Limit = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Limit)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl_Password
@@ -62,7 +64,7 @@
             this.txt_Password.Location = new System.Drawing.Point(72, 261);
             this.txt_Password.Name = "txt_Password";
             this.txt_Password.PasswordChar = '*';
-            this.txt_Password.Size = new System.Drawing.Size(559, 20);
+            this.txt_Password.Size = new System.Drawing.Size(498, 20);
             this.txt_Password.TabIndex = 3;
             // 
             // lbl_Username
@@ -80,7 +82,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txt_Username.Location = new System.Drawing.Point(72, 235);
             this.txt_Username.Name = "txt_Username";
-            this.txt_Username.Size = new System.Drawing.Size(559, 20);
+            this.txt_Username.Size = new System.Drawing.Size(498, 20);
             this.txt_Username.TabIndex = 2;
             // 
             // lbl_Site
@@ -98,15 +100,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txt_Site.Location = new System.Drawing.Point(72, 209);
             this.txt_Site.Name = "txt_Site";
-            this.txt_Site.Size = new System.Drawing.Size(559, 20);
+            this.txt_Site.Size = new System.Drawing.Size(498, 20);
             this.txt_Site.TabIndex = 1;
             // 
             // cmd_Get_Sites
             // 
-            this.cmd_Get_Sites.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmd_Get_Sites.Location = new System.Drawing.Point(72, 340);
+            this.cmd_Get_Sites.Location = new System.Drawing.Point(72, 321);
             this.cmd_Get_Sites.Name = "cmd_Get_Sites";
-            this.cmd_Get_Sites.Size = new System.Drawing.Size(100, 30);
+            this.cmd_Get_Sites.Size = new System.Drawing.Size(100, 50);
             this.cmd_Get_Sites.TabIndex = 4;
             this.cmd_Get_Sites.Text = "Get Sites";
             this.cmd_Get_Sites.UseVisualStyleBackColor = true;
@@ -114,10 +115,9 @@
             // 
             // cmd_Close
             // 
-            this.cmd_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_Close.Location = new System.Drawing.Point(531, 340);
+            this.cmd_Close.Location = new System.Drawing.Point(470, 377);
             this.cmd_Close.Name = "cmd_Close";
-            this.cmd_Close.Size = new System.Drawing.Size(100, 30);
+            this.cmd_Close.Size = new System.Drawing.Size(100, 50);
             this.cmd_Close.TabIndex = 0;
             this.cmd_Close.Text = "Close";
             this.cmd_Close.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@
             this.lbl_Header.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Header.Location = new System.Drawing.Point(17, 22);
             this.lbl_Header.Name = "lbl_Header";
-            this.lbl_Header.Size = new System.Drawing.Size(614, 46);
+            this.lbl_Header.Size = new System.Drawing.Size(553, 46);
             this.lbl_Header.TabIndex = 8;
             this.lbl_Header.Text = "SharePoint Discovery App";
             this.lbl_Header.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -147,47 +147,52 @@
             // 
             // chk_Recursive
             // 
-            this.chk_Recursive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chk_Recursive.AutoSize = true;
             this.chk_Recursive.Checked = true;
             this.chk_Recursive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_Recursive.Location = new System.Drawing.Point(72, 317);
+            this.chk_Recursive.Location = new System.Drawing.Point(178, 350);
             this.chk_Recursive.Name = "chk_Recursive";
             this.chk_Recursive.Size = new System.Drawing.Size(113, 17);
             this.chk_Recursive.TabIndex = 10;
             this.chk_Recursive.Text = "Search recursively";
             this.chk_Recursive.UseVisualStyleBackColor = true;
             // 
-            // hsc_Limit
-            // 
-            this.hsc_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hsc_Limit.LargeChange = 1;
-            this.hsc_Limit.Location = new System.Drawing.Point(197, 340);
-            this.hsc_Limit.Maximum = 15;
-            this.hsc_Limit.Name = "hsc_Limit";
-            this.hsc_Limit.Size = new System.Drawing.Size(319, 30);
-            this.hsc_Limit.TabIndex = 11;
-            this.hsc_Limit.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsc_Limit_Scroll);
-            // 
             // lbl_Limit
             // 
-            this.lbl_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbl_Limit.Location = new System.Drawing.Point(197, 317);
+            this.lbl_Limit.AutoSize = true;
+            this.lbl_Limit.Location = new System.Drawing.Point(225, 323);
             this.lbl_Limit.Name = "lbl_Limit";
-            this.lbl_Limit.Size = new System.Drawing.Size(319, 17);
+            this.lbl_Limit.Size = new System.Drawing.Size(87, 13);
             this.lbl_Limit.TabIndex = 12;
             this.lbl_Limit.Text = "Retrieve all items";
             this.lbl_Limit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btn_Test_List
+            // 
+            this.btn_Test_List.Location = new System.Drawing.Point(72, 377);
+            this.btn_Test_List.Name = "btn_Test_List";
+            this.btn_Test_List.Size = new System.Drawing.Size(100, 50);
+            this.btn_Test_List.TabIndex = 13;
+            this.btn_Test_List.Text = "Open List";
+            this.btn_Test_List.UseVisualStyleBackColor = true;
+            this.btn_Test_List.Click += new System.EventHandler(this.btn_Test_List_Click);
+            // 
+            // nud_Limit
+            // 
+            this.nud_Limit.Location = new System.Drawing.Point(178, 321);
+            this.nud_Limit.Name = "nud_Limit";
+            this.nud_Limit.Size = new System.Drawing.Size(41, 20);
+            this.nud_Limit.TabIndex = 14;
+            this.nud_Limit.ValueChanged += new System.EventHandler(this.nud_Limit_ValueChanged);
             // 
             // frm_Main_Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 382);
+            this.ClientSize = new System.Drawing.Size(582, 440);
+            this.Controls.Add(this.nud_Limit);
+            this.Controls.Add(this.btn_Test_List);
             this.Controls.Add(this.lbl_Limit);
-            this.Controls.Add(this.hsc_Limit);
             this.Controls.Add(this.chk_Recursive);
             this.Controls.Add(this.lbl_Credentials);
             this.Controls.Add(this.lbl_Header);
@@ -199,9 +204,12 @@
             this.Controls.Add(this.txt_Username);
             this.Controls.Add(this.lbl_Site);
             this.Controls.Add(this.txt_Site);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "frm_Main_Menu";
             this.Text = "SharePoint Discovery App";
             this.Load += new System.EventHandler(this.frm_Main_Menu_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Limit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,9 +228,10 @@
         private System.Windows.Forms.Label lbl_Header;
         private System.Windows.Forms.Label lbl_Credentials;
         private System.Windows.Forms.CheckBox chk_Recursive;
-        private System.Windows.Forms.HScrollBar hsc_Limit;
         private System.Windows.Forms.Label lbl_Limit;
         private System.Windows.Forms.ToolTip tip_Recursive;
         private System.Windows.Forms.ToolTip tip_Limit;
+        private System.Windows.Forms.Button btn_Test_List;
+        private System.Windows.Forms.NumericUpDown nud_Limit;
     }
 }
