@@ -20,9 +20,6 @@ namespace SharePoint_Discovery_App
 
         private void frm_Test_List_Load(object sender, EventArgs e)
         {
-            this.txt_Guid.Text = "a0aa00a0-1234-1a23-9f99-54321bc78d90";
-            this.txt_Url.Text = @"https://my.sharepoint.com/Files/File%20Area/Live/";
-
             this.Width = 1000;
         }
 
@@ -234,7 +231,7 @@ namespace SharePoint_Discovery_App
             }
 
             // Finally, if any rows got added, auto-size the columns
-            if (dgv_List.Rows.Count > 0)
+            if (dgv_List.Rows.Count > 0 && dgv_List.Rows.Count <= 500)
             {
                 string text = lbl_Summary.Text;
                 lbl_Summary.Text = "Auto-sizing columns...";

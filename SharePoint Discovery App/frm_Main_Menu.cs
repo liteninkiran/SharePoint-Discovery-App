@@ -17,10 +17,6 @@ namespace SharePoint_Discovery_App
 
         private void frm_Main_Menu_Load(object sender, EventArgs e)
         {
-            txt_Site.Text = "https://my.sharepoint.com";
-            txt_Username.Text = "user@domain.com";
-            txt_Password.Text = "password";
-
             tip_Recursive.SetToolTip(this.chk_Recursive, "Uncheck to search sub-sites 1 layer deep (quicker). Check to recursively search all sites (slower).");
             tip_Limit.SetToolTip(this.nud_Limit, "Limit the number of sub-sites retrieved (quicker). Set to zero to retreive all sub-sites (slower).");
         }
