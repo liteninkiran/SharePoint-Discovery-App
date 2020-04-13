@@ -22,6 +22,7 @@ namespace SharePoint_Discovery_App
             col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
             col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldName", "Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldType", "Type")];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("maxLength", "Length")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add(chkUnique)];
             col = dgv_Data.Columns[dgv_Data.Columns.Add(chkRequired)];
             col = dgv_Data.Columns[dgv_Data.Columns.Add(chkReadOnly)];

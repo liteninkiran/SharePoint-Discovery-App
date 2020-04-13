@@ -170,21 +170,51 @@ namespace SharePoint_Discovery_App
                 string enforceUniqueValues = oField.EnforceUniqueValues.ToString();
                 string required = oField.Required.ToString();
                 string readOnly = oField.ReadOnlyField.ToString();
+
+                // These 2 attributes will depend on the field type
+                string maxLength = null;
                 string formula = null;
 
-                if (oField.TypeAsString == "Calculated")
+                // Find field types for specific actions
+                switch(fieldType)
                 {
-                    FieldCalculated calcField = (FieldCalculated)oField;
-                    formula = calcField.Formula;
+                    // Max Length
+                    case "Text":
+
+                        // Convert to "Text Field"
+                        SP.FieldText textField = (SP.FieldText)oField;
+
+                        // We now have access to the attribute
+                        maxLength = textField.MaxLength.ToString();
+
+                        // Break out of the switch
+                        break;
+
+                    // Formula
+                    case "Calculated":
+
+                        // Convert to "Calculated Field"
+                        FieldCalculated calcField = (FieldCalculated)oField;
+
+                        // We now have access to the attribute
+                        formula = calcField.Formula;
+
+                        // Break out of the switch
+                        break;
                 }
 
-                if (oField.TypeAsString == "Computed")
-                {
-                    //FieldComputed calcField = (FieldComputed)oField;
-                    //formula = calcField.SchemaXml;
-                }
-
-                fieldForm.AddRow(i, fieldName, fieldType, enforceUniqueValues, required, readOnly, defaultValue, formula);
+                fieldForm.AddRow
+                (
+                    i, 
+                    fieldName, 
+                    fieldType, 
+                    maxLength, 
+                    enforceUniqueValues, 
+                    required, 
+                    readOnly, 
+                    defaultValue, 
+                    formula
+                );
             }
         }
 

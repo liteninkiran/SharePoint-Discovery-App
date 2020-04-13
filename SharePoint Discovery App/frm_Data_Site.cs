@@ -404,11 +404,18 @@ namespace SharePoint_Discovery_App
         private void txt_Name_TextChanged(object sender, EventArgs e)
         {
             txt_Guid.Enabled = txt_Name.Text == "";
+            cmd_Get_Views.Enabled = (txt_Name.Text != "" || txt_Guid.Text != "");
         }
 
         private void txt_Guid_TextChanged(object sender, EventArgs e)
         {
             txt_Name.Enabled = txt_Guid.Text == "";
+            cmd_Get_Views.Enabled = (txt_Name.Text != "" || txt_Guid.Text != "");
+        }
+
+        private void cmd_Get_Views_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet");
         }
     }
 }
