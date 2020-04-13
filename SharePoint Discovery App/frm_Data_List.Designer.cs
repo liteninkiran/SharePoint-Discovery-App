@@ -30,6 +30,7 @@
         {
             this.cmd_Get_Fields = new System.Windows.Forms.Button();
             this.cmd_Get_Views = new System.Windows.Forms.Button();
+            this.cmd_Open_List = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmd_Get_Fields
@@ -54,10 +55,22 @@
             this.cmd_Get_Views.UseVisualStyleBackColor = true;
             this.cmd_Get_Views.Click += new System.EventHandler(this.cmd_Get_Views_Click);
             // 
+            // cmd_Open_List
+            // 
+            this.cmd_Open_List.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmd_Open_List.Location = new System.Drawing.Point(330, 394);
+            this.cmd_Open_List.Name = "cmd_Open_List";
+            this.cmd_Open_List.Size = new System.Drawing.Size(100, 44);
+            this.cmd_Open_List.TabIndex = 25;
+            this.cmd_Open_List.Text = "Open List";
+            this.cmd_Open_List.UseVisualStyleBackColor = true;
+            this.cmd_Open_List.Click += new System.EventHandler(this.cmd_Open_List_Click);
+            // 
             // frm_Data_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(588, 450);
+            this.Controls.Add(this.cmd_Open_List);
             this.Controls.Add(this.cmd_Get_Fields);
             this.Controls.Add(this.cmd_Get_Views);
             this.Name = "frm_Data_List";
@@ -65,6 +78,7 @@
             this.Controls.SetChildIndex(this.lbl_Header, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Views, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Fields, 0);
+            this.Controls.SetChildIndex(this.cmd_Open_List, 0);
             this.ResumeLayout(false);
 
         }
@@ -73,5 +87,6 @@
 
         private System.Windows.Forms.Button cmd_Get_Fields;
         private System.Windows.Forms.Button cmd_Get_Views;
+        private System.Windows.Forms.Button cmd_Open_List;
     }
 }

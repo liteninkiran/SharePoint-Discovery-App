@@ -30,15 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             this.cmd_Get_Lists = new System.Windows.Forms.Button();
-            this.chk_Load_Fields = new System.Windows.Forms.CheckBox();
-            this.chk_Load_Views = new System.Windows.Forms.CheckBox();
-            this.tip_Load_Views = new System.Windows.Forms.ToolTip(this.components);
-            this.tip_Load_Fields = new System.Windows.Forms.ToolTip(this.components);
             this.txt_Guid = new System.Windows.Forms.TextBox();
             this.txt_Name = new System.Windows.Forms.TextBox();
             this.lbl_Guid = new System.Windows.Forms.Label();
             this.lbl_Name = new System.Windows.Forms.Label();
             this.cmd_Get_Views = new System.Windows.Forms.Button();
+            this.tip_Search_By_Guid = new System.Windows.Forms.ToolTip(this.components);
+            this.tip_Search_By_Name = new System.Windows.Forms.ToolTip(this.components);
+            this.nud_Row_Limit = new System.Windows.Forms.NumericUpDown();
+            this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+            this.lbl_Row_Limit = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Row_Limit)).BeginInit();
             this.SuspendLayout();
             // 
             // cmd_Get_Lists
@@ -51,26 +53,6 @@
             this.cmd_Get_Lists.Text = "Get Lists";
             this.cmd_Get_Lists.UseVisualStyleBackColor = true;
             this.cmd_Get_Lists.Click += new System.EventHandler(this.cmd_Get_Lists_Click);
-            // 
-            // chk_Load_Fields
-            // 
-            this.chk_Load_Fields.AutoSize = true;
-            this.chk_Load_Fields.Location = new System.Drawing.Point(99, 54);
-            this.chk_Load_Fields.Name = "chk_Load_Fields";
-            this.chk_Load_Fields.Size = new System.Drawing.Size(80, 17);
-            this.chk_Load_Fields.TabIndex = 25;
-            this.chk_Load_Fields.Text = "Load Fields";
-            this.chk_Load_Fields.UseVisualStyleBackColor = true;
-            // 
-            // chk_Load_Views
-            // 
-            this.chk_Load_Views.AutoSize = true;
-            this.chk_Load_Views.Location = new System.Drawing.Point(12, 54);
-            this.chk_Load_Views.Name = "chk_Load_Views";
-            this.chk_Load_Views.Size = new System.Drawing.Size(81, 17);
-            this.chk_Load_Views.TabIndex = 24;
-            this.chk_Load_Views.Text = "Load Views";
-            this.chk_Load_Views.UseVisualStyleBackColor = true;
             // 
             // txt_Guid
             // 
@@ -124,29 +106,54 @@
             this.cmd_Get_Views.UseVisualStyleBackColor = true;
             this.cmd_Get_Views.Click += new System.EventHandler(this.cmd_Get_Views_Click);
             // 
+            // nud_Row_Limit
+            // 
+            this.nud_Row_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nud_Row_Limit.Location = new System.Drawing.Point(525, 51);
+            this.nud_Row_Limit.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.nud_Row_Limit.Name = "nud_Row_Limit";
+            this.nud_Row_Limit.Size = new System.Drawing.Size(51, 20);
+            this.nud_Row_Limit.TabIndex = 31;
+            this.nud_Row_Limit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lbl_Row_Limit
+            // 
+            this.lbl_Row_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_Row_Limit.AutoSize = true;
+            this.lbl_Row_Limit.Location = new System.Drawing.Point(466, 53);
+            this.lbl_Row_Limit.Name = "lbl_Row_Limit";
+            this.lbl_Row_Limit.Size = new System.Drawing.Size(53, 13);
+            this.lbl_Row_Limit.TabIndex = 32;
+            this.lbl_Row_Limit.Text = "Row Limit";
+            // 
             // frm_Data_Site
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(588, 450);
+            this.Controls.Add(this.lbl_Row_Limit);
+            this.Controls.Add(this.nud_Row_Limit);
             this.Controls.Add(this.cmd_Get_Views);
             this.Controls.Add(this.lbl_Name);
             this.Controls.Add(this.lbl_Guid);
             this.Controls.Add(this.txt_Name);
             this.Controls.Add(this.txt_Guid);
-            this.Controls.Add(this.chk_Load_Fields);
-            this.Controls.Add(this.chk_Load_Views);
             this.Controls.Add(this.cmd_Get_Lists);
             this.Name = "frm_Data_Site";
             this.Load += new System.EventHandler(this.frm_Data_Site_Load);
             this.Controls.SetChildIndex(this.lbl_Header, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Lists, 0);
-            this.Controls.SetChildIndex(this.chk_Load_Views, 0);
-            this.Controls.SetChildIndex(this.chk_Load_Fields, 0);
             this.Controls.SetChildIndex(this.txt_Guid, 0);
             this.Controls.SetChildIndex(this.txt_Name, 0);
             this.Controls.SetChildIndex(this.lbl_Guid, 0);
             this.Controls.SetChildIndex(this.lbl_Name, 0);
             this.Controls.SetChildIndex(this.cmd_Get_Views, 0);
+            this.Controls.SetChildIndex(this.nud_Row_Limit, 0);
+            this.Controls.SetChildIndex(this.lbl_Row_Limit, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Row_Limit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,14 +162,15 @@
         #endregion
 
         private System.Windows.Forms.Button cmd_Get_Lists;
-        private System.Windows.Forms.CheckBox chk_Load_Fields;
-        private System.Windows.Forms.CheckBox chk_Load_Views;
-        private System.Windows.Forms.ToolTip tip_Load_Views;
-        private System.Windows.Forms.ToolTip tip_Load_Fields;
         private System.Windows.Forms.TextBox txt_Guid;
         private System.Windows.Forms.TextBox txt_Name;
         private System.Windows.Forms.Label lbl_Guid;
         private System.Windows.Forms.Label lbl_Name;
         private System.Windows.Forms.Button cmd_Get_Views;
+        private System.Windows.Forms.ToolTip tip_Search_By_Guid;
+        private System.Windows.Forms.ToolTip tip_Search_By_Name;
+        private System.Windows.Forms.NumericUpDown nud_Row_Limit;
+        private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.Label lbl_Row_Limit;
     }
 }

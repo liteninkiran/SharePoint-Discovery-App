@@ -37,6 +37,7 @@
             this.txt_Guid = new System.Windows.Forms.TextBox();
             this.lbl_Row_Limit = new System.Windows.Forms.Label();
             this.nud_Row_Limit = new System.Windows.Forms.NumericUpDown();
+            this.cmd_Excel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Row_Limit)).BeginInit();
             this.SuspendLayout();
@@ -47,15 +48,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_List.Location = new System.Drawing.Point(12, 12);
+            this.dgv_List.Location = new System.Drawing.Point(12, 51);
             this.dgv_List.Name = "dgv_List";
-            this.dgv_List.Size = new System.Drawing.Size(569, 332);
+            this.dgv_List.Size = new System.Drawing.Size(650, 321);
             this.dgv_List.TabIndex = 0;
             // 
             // cmd_Close
             // 
             this.cmd_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_Close.Location = new System.Drawing.Point(481, 394);
+            this.cmd_Close.Location = new System.Drawing.Point(562, 394);
             this.cmd_Close.Name = "cmd_Close";
             this.cmd_Close.Size = new System.Drawing.Size(100, 44);
             this.cmd_Close.TabIndex = 17;
@@ -66,7 +67,7 @@
             // cmd_Open_List
             // 
             this.cmd_Open_List.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cmd_Open_List.Location = new System.Drawing.Point(12, 394);
+            this.cmd_Open_List.Location = new System.Drawing.Point(118, 394);
             this.cmd_Open_List.Name = "cmd_Open_List";
             this.cmd_Open_List.Size = new System.Drawing.Size(100, 44);
             this.cmd_Open_List.TabIndex = 18;
@@ -79,7 +80,7 @@
             this.lbl_Url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_Url.AutoSize = true;
-            this.lbl_Url.Location = new System.Drawing.Point(131, 402);
+            this.lbl_Url.Location = new System.Drawing.Point(236, 402);
             this.lbl_Url.Name = "lbl_Url";
             this.lbl_Url.Size = new System.Drawing.Size(50, 13);
             this.lbl_Url.TabIndex = 22;
@@ -89,16 +90,16 @@
             // 
             this.txt_Url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_Url.Location = new System.Drawing.Point(134, 418);
+            this.txt_Url.Location = new System.Drawing.Point(239, 418);
             this.txt_Url.Name = "txt_Url";
-            this.txt_Url.Size = new System.Drawing.Size(91, 20);
+            this.txt_Url.Size = new System.Drawing.Size(67, 20);
             this.txt_Url.TabIndex = 20;
             // 
             // lbl_Guid
             // 
             this.lbl_Guid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_Guid.AutoSize = true;
-            this.lbl_Guid.Location = new System.Drawing.Point(228, 402);
+            this.lbl_Guid.Location = new System.Drawing.Point(309, 402);
             this.lbl_Guid.Name = "lbl_Guid";
             this.lbl_Guid.Size = new System.Drawing.Size(53, 13);
             this.lbl_Guid.TabIndex = 21;
@@ -107,16 +108,16 @@
             // txt_Guid
             // 
             this.txt_Guid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_Guid.Location = new System.Drawing.Point(231, 418);
+            this.txt_Guid.Location = new System.Drawing.Point(312, 418);
             this.txt_Guid.Name = "txt_Guid";
             this.txt_Guid.Size = new System.Drawing.Size(233, 20);
             this.txt_Guid.TabIndex = 19;
             // 
             // lbl_Row_Limit
             // 
-            this.lbl_Row_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_Row_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_Row_Limit.AutoSize = true;
-            this.lbl_Row_Limit.Location = new System.Drawing.Point(449, 353);
+            this.lbl_Row_Limit.Location = new System.Drawing.Point(530, 27);
             this.lbl_Row_Limit.Name = "lbl_Row_Limit";
             this.lbl_Row_Limit.Size = new System.Drawing.Size(53, 13);
             this.lbl_Row_Limit.TabIndex = 23;
@@ -124,13 +125,13 @@
             // 
             // nud_Row_Limit
             // 
-            this.nud_Row_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.nud_Row_Limit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nud_Row_Limit.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.nud_Row_Limit.Location = new System.Drawing.Point(508, 351);
+            this.nud_Row_Limit.Location = new System.Drawing.Point(589, 25);
             this.nud_Row_Limit.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -146,11 +147,23 @@
             0,
             0});
             // 
+            // cmd_Excel
+            // 
+            this.cmd_Excel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmd_Excel.Location = new System.Drawing.Point(12, 394);
+            this.cmd_Excel.Name = "cmd_Excel";
+            this.cmd_Excel.Size = new System.Drawing.Size(100, 44);
+            this.cmd_Excel.TabIndex = 26;
+            this.cmd_Excel.Text = "Excel";
+            this.cmd_Excel.UseVisualStyleBackColor = true;
+            this.cmd_Excel.Click += new System.EventHandler(this.cmd_Excel_Click);
+            // 
             // frm_Test_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 450);
+            this.ClientSize = new System.Drawing.Size(674, 450);
+            this.Controls.Add(this.cmd_Excel);
             this.Controls.Add(this.nud_Row_Limit);
             this.Controls.Add(this.lbl_Row_Limit);
             this.Controls.Add(this.txt_Guid);
@@ -176,10 +189,11 @@
         private System.Windows.Forms.Button cmd_Close;
         private System.Windows.Forms.Button cmd_Open_List;
         private System.Windows.Forms.Label lbl_Url;
-        private System.Windows.Forms.TextBox txt_Url;
         private System.Windows.Forms.Label lbl_Guid;
-        private System.Windows.Forms.TextBox txt_Guid;
         private System.Windows.Forms.Label lbl_Row_Limit;
         private System.Windows.Forms.NumericUpDown nud_Row_Limit;
+        public System.Windows.Forms.TextBox txt_Url;
+        public System.Windows.Forms.TextBox txt_Guid;
+        private System.Windows.Forms.Button cmd_Excel;
     }
 }

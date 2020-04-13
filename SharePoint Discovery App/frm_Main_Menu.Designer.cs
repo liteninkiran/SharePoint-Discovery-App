@@ -162,9 +162,9 @@
             this.lbl_Limit.AutoSize = true;
             this.lbl_Limit.Location = new System.Drawing.Point(225, 323);
             this.lbl_Limit.Name = "lbl_Limit";
-            this.lbl_Limit.Size = new System.Drawing.Size(87, 13);
+            this.lbl_Limit.Size = new System.Drawing.Size(53, 13);
             this.lbl_Limit.TabIndex = 12;
-            this.lbl_Limit.Text = "Retrieve all items";
+            this.lbl_Limit.Text = "Row Limit";
             this.lbl_Limit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btn_Test_List
@@ -183,7 +183,6 @@
             this.nud_Limit.Name = "nud_Limit";
             this.nud_Limit.Size = new System.Drawing.Size(41, 20);
             this.nud_Limit.TabIndex = 14;
-            this.nud_Limit.ValueChanged += new System.EventHandler(this.nud_Limit_ValueChanged);
             // 
             // frm_Main_Menu
             // 

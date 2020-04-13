@@ -162,15 +162,11 @@ namespace SharePoint_Discovery_App
 
             foreach (SP.Field oField in oList.Fields)
             {
-                i++;
-
-                string fieldName = oField.Title;
+                // Store the Field Type
                 string fieldType = oField.TypeAsString;
-                string defaultValue = oField.DefaultValue;
-                string enforceUniqueValues = oField.EnforceUniqueValues.ToString();
-                string required = oField.Required.ToString();
-                string readOnly = oField.ReadOnlyField.ToString();
-                string isSealed = oField.Sealed.ToString();
+
+                // We will exclude some entries by Field Type
+                bool skip = false;
 
                 // These 2 attributes will depend on the field type
                 string maxLength = null;
@@ -202,21 +198,43 @@ namespace SharePoint_Discovery_App
 
                         // Break out of the switch
                         break;
+
+                    // We won't include "Computed" or "Lookup" fields
+                    case "Lookup":
+                    case "Computed":
+
+                        // Skip
+                        skip = true;
+
+                        // Break out of the switch
+                        break;
                 }
 
-                fieldForm.AddRow
-                (
-                    i, 
-                    fieldName, 
-                    fieldType, 
-                    maxLength, 
-                    enforceUniqueValues, 
-                    required, 
-                    readOnly,
-                    isSealed,
-                    defaultValue, 
-                    formula
-                );
+                if(skip == false)
+                {
+                    i++;
+
+                    string fieldName = oField.Title;
+                    string defaultValue = oField.DefaultValue;
+                    string enforceUniqueValues = oField.EnforceUniqueValues.ToString();
+                    string required = oField.Required.ToString();
+                    string readOnly = oField.ReadOnlyField.ToString();
+                    string isSealed = oField.Sealed.ToString();
+
+                    fieldForm.AddRow
+                    (
+                        i,
+                        fieldName,
+                        fieldType,
+                        maxLength,
+                        enforceUniqueValues,
+                        required,
+                        readOnly,
+                        isSealed,
+                        defaultValue,
+                        formula
+                    );
+                }
             }
         }
 
@@ -227,6 +245,7 @@ namespace SharePoint_Discovery_App
 
             viewForm.Height = 700;
             viewForm.Width = 1500;
+            viewForm.WindowState = FormWindowState.Maximized;
 
             viewForm.Text = siteUrl;
             viewForm.lbl_Header.Text = "Views - " + listName + " (" + subSiteName + ")";
@@ -245,6 +264,7 @@ namespace SharePoint_Discovery_App
 
             fieldForm.Height = 700;
             fieldForm.Width = 1500;
+            fieldForm.WindowState = FormWindowState.Maximized;
 
             fieldForm.Text = siteUrl;
             fieldForm.lbl_Header.Text = "Fields - " + listName + " (" + subSiteName + ")";
@@ -279,6 +299,27 @@ namespace SharePoint_Discovery_App
             col = dgv_Data.Columns[dgv_Data.Columns.Add("listId", "GUID")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("created", "Created")]; col.ValueType = typeof(DateTime);
             col = dgv_Data.Columns[dgv_Data.Columns.Add(lnk)];
+        }
+
+        private void cmd_Open_List_Click(object sender, EventArgs e)
+        {
+            //dgv_Data.Columns[1].Visible = true;
+            //dgv_Data.Columns[2].Visible = true;
+            //dgv_Data.Refresh();
+
+            int row = dgv_Data.CurrentRow.Index;
+
+            string url = dgv_Data["siteAddress", row].Value.ToString();
+            string guid = dgv_Data["listId", row].Value.ToString();
+
+            frm_Test_List testForm = new frm_Test_List();
+
+            testForm.Show();
+
+            testForm.txt_Guid.Text = guid;
+            testForm.txt_Url.Text = url;
+
+
         }
     }
 }

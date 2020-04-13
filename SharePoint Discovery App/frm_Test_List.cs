@@ -53,7 +53,7 @@ namespace SharePoint_Discovery_App
 
             List oList = web.Lists.GetById(g);
 
-            // Load lists
+            // Load list
             clientContext.Load(oList);
 
             // Execute the query to the server  
@@ -79,7 +79,20 @@ namespace SharePoint_Discovery_App
 
             foreach (SP.Field oField in oList.Fields)
             {
-                if (oField.TypeAsString != "Computed")
+                bool add = true;
+                bool show = true;
+
+                switch(oField.TypeAsString)
+                {
+                    case "Computed":
+                        add = false;
+                        break;
+                    case "Lookup":
+                        show = false;
+                        break;
+                }
+
+                if (add)
                 {
                     i++;
 
@@ -88,6 +101,8 @@ namespace SharePoint_Discovery_App
                     col.HeaderText = oField.Title;
 
                     dgv_List.Columns.Add(col);
+
+                    col.Visible = show;
 
                     if(i <= 20)
                     {
@@ -107,7 +122,17 @@ namespace SharePoint_Discovery_App
 
             // Load in the items
             clientContext.Load(collListItem);
-            clientContext.ExecuteQuery();
+
+            try
+            {
+                clientContext.ExecuteQuery();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            
 
             dgv_List.Refresh();
 
@@ -129,7 +154,22 @@ namespace SharePoint_Discovery_App
 
                     if (x.Value != null)
                     {
-                        dgv_List[j, i].Value = x.Value.ToString();
+                        string value = x.Value.ToString();
+
+                        switch (value)
+                        {
+                            case "Microsoft.SharePoint.Client.FieldUserValue":
+                                SP.FieldUserValue uField = (SP.FieldUserValue)x.Value;
+                                value = uField.LookupValue.ToString();
+                                break;
+                            case "Microsoft.SharePoint.Client.FieldLookupValue[]":
+
+                                value = "";
+
+                                break;
+                        }
+
+                        dgv_List[j, i].Value = value;
                     }
                 }               
 
@@ -140,6 +180,11 @@ namespace SharePoint_Discovery_App
                     break;
                 }
             }
+        }
+
+        private void cmd_Excel_Click(object sender, EventArgs e)
+        {
+            cls_Excel.ExportDatagridview(dgv_List);
         }
     }
 }

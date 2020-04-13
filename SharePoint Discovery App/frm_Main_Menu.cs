@@ -71,6 +71,7 @@ namespace SharePoint_Discovery_App
             // Re-size the form
             siteForm.Height = 700;
             siteForm.Width = 1000;
+            siteForm.WindowState = FormWindowState.Maximized;
 
             // Add columns to the data grid view
             siteForm.AddColumns();
@@ -172,42 +173,11 @@ namespace SharePoint_Discovery_App
             }
         }
 
-        private void UpdateLabel()
-        {
-            string item = null;
-            string quantity = null;
-
-            if(nud_Limit.Value == 1)
-            {
-                item = " item";
-            }
-            else
-            {
-                item = " items";
-            }
-
-            if (nud_Limit.Value == 0)
-            {
-                quantity = "all";
-            }
-            else
-            {
-                quantity = nud_Limit.Value.ToString();
-            }
-
-            lbl_Limit.Text = "Retrieve " + quantity + item;
-        }
-
         private void btn_Test_List_Click(object sender, EventArgs e)
         {
             SetStaticVars();
             frm_Test_List testForm = new frm_Test_List();
             testForm.Show();
-        }
-
-        private void nud_Limit_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateLabel();
         }
     }
 }

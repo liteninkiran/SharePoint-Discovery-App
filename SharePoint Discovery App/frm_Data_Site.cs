@@ -255,46 +255,30 @@ namespace SharePoint_Discovery_App
 
         private void SetViewVars(ClientContext clientContext, SP.List oList, DataGridView dgv_Data, ref string defaultViewUrl, ref string defaultViewTitle, ref string viewCount)
         {
-            if (chk_Load_Views.Checked == true)
+            clientContext.Load(oList.Views);
+            clientContext.Load(oList.DefaultView);
+            clientContext.ExecuteQuery();
+
+            viewCount = oList.Views.Count.ToString();
+
+            try
             {
-                clientContext.Load(oList.Views);
-                clientContext.Load(oList.DefaultView);
-                clientContext.ExecuteQuery();
+                SP.View defaultView = oList.DefaultView;
 
-                viewCount = oList.Views.Count.ToString();
-
-                try
-                {
-                    SP.View defaultView = oList.DefaultView;
-
-                    defaultViewTitle = defaultView.Title;
-                    defaultViewUrl = frm_Main_Menu.siteUrl + defaultView.ServerRelativeUrl;
-                }
-                catch (Exception ex)
-                {
-                    defaultViewTitle = "";
-                }
+                defaultViewTitle = defaultView.Title;
+                defaultViewUrl = frm_Main_Menu.siteUrl + defaultView.ServerRelativeUrl;
             }
-            else
+            catch (Exception ex)
             {
-                dgv_Data.Columns["defaultView"].Visible = false;
-                dgv_Data.Columns["viewCount"].Visible = false;
-                dgv_Data.Columns["url"].Visible = false;
+                defaultViewTitle = "";
             }
         }
 
         private void SetFieldVars(ClientContext clientContext, SP.List oList, DataGridView dgv_Data, ref string fieldCount)
         {
-            if (chk_Load_Fields.Checked == true)
-            {
-                clientContext.Load(oList.Fields);
-                clientContext.ExecuteQuery();
-                fieldCount = oList.Fields.Count.ToString();
-            }
-            else
-            {
-                dgv_Data.Columns["fieldCount"].Visible = false;
-            }
+            clientContext.Load(oList.Fields);
+            clientContext.ExecuteQuery();
+            fieldCount = oList.Fields.Count.ToString();
         }
 
         private string GetBaseTypeDescription(SP.BaseType baseType)
@@ -354,6 +338,11 @@ namespace SharePoint_Discovery_App
                         oList.Created.ToString(),
                         defaultViewUrl
                     );
+
+                if(i >= nud_Row_Limit.Value && nud_Row_Limit.Value != 0)
+                {
+                    break;
+                }
             }
         }
 
@@ -364,6 +353,7 @@ namespace SharePoint_Discovery_App
 
             listForm.Width = width;
             listForm.Height = height;
+            listForm.WindowState = FormWindowState.Maximized;
 
             listForm.Text = siteUrl;
             listForm.lbl_Header.Text = "Lists - " + siteName;
@@ -400,20 +390,24 @@ namespace SharePoint_Discovery_App
             // Re-size columns
             ResizeColumns();
 
-            tip_Load_Views.SetToolTip(this.chk_Load_Views, "Tick to show the [View Count], [Default View] & [Site URL] columns (slower)");
-            tip_Load_Fields.SetToolTip(this.chk_Load_Fields, "Tick to show the [Field Count] column (slower)");
+            tip_Search_By_Guid.SetToolTip(this.txt_Guid, "Enter a List or View GUID. The Data Grid View will be searched row-by-row until a match is found.");
+            tip_Search_By_Name.SetToolTip(this.txt_Name, "Enter a List or View Name. The Data Grid View will be searched row-by-row, returning all matches found.");
         }
 
         private void txt_Name_TextChanged(object sender, EventArgs e)
         {
             txt_Guid.Enabled = txt_Name.Text == "";
             cmd_Get_Views.Enabled = (txt_Name.Text != "" || txt_Guid.Text != "");
+            nud_Row_Limit.Visible = (txt_Name.Text == "" && txt_Guid.Text == "");
+            lbl_Row_Limit.Visible = (txt_Name.Text == "" && txt_Guid.Text == "");
         }
 
         private void txt_Guid_TextChanged(object sender, EventArgs e)
         {
             txt_Name.Enabled = txt_Guid.Text == "";
             cmd_Get_Views.Enabled = (txt_Name.Text != "" || txt_Guid.Text != "");
+            nud_Row_Limit.Visible = (txt_Name.Text == "" && txt_Guid.Text == "");
+            lbl_Row_Limit.Visible = (txt_Name.Text == "" && txt_Guid.Text == "");
         }
 
         private void cmd_Get_Views_Click(object sender, EventArgs e)
