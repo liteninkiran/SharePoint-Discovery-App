@@ -29,6 +29,12 @@ namespace SharePoint_Discovery_App
             // Store site List Name
             string listName = dgv_Data[col, row].Value.ToString();
 
+            // Store column of Site Name
+            col = dgv_Data.Columns["siteName"].Index;
+
+            // Store column of Site Address
+            string siteName = dgv_Data[col, row].Value.ToString();
+
             // Store column of Site Address
             col = dgv_Data.Columns["siteAddress"].Index;
 
@@ -61,7 +67,7 @@ namespace SharePoint_Discovery_App
             string listId = dgv_Data[col, row].Value.ToString();
 
             // Add records to the data grid
-            AddViews(viewForm, listId, siteAddress);
+            AddViews(viewForm, listId, siteAddress, siteName);
 
             // Show the List form
             viewForm.Show();
@@ -116,7 +122,7 @@ namespace SharePoint_Discovery_App
             fieldForm.Show();
         }
 
-        private void AddViews(frm_Data_View viewForm, string listId, string siteAddress)
+        private void AddViews(frm_Data_View viewForm, string listId, string siteAddress, string siteName)
         {
             Guid g = new Guid(listId);
 
@@ -143,7 +149,10 @@ namespace SharePoint_Discovery_App
                 string viewQuery = oView.ViewQuery;
                 string url = frm_Main_Menu.siteUrl + oView.ServerRelativeUrl;
 
-                viewForm.AddRow(i, viewName, fieldCount, rowLimit, viewId, viewQuery, url);
+                viewForm.AddRow(i, viewName, siteName, siteAddress, fieldCount, rowLimit, viewId, viewQuery, url);
+
+                lbl_Row_Count.Text = i.ToString() + " record(s) found";
+                lbl_Row_Count.Refresh();
             }
         }
 
@@ -211,6 +220,7 @@ namespace SharePoint_Discovery_App
                 }
 
                 if(skip == false)
+                //if (true)
                 {
                     i++;
 
@@ -225,6 +235,7 @@ namespace SharePoint_Discovery_App
                     (
                         i,
                         fieldName,
+                        oField.InternalName,
                         fieldType,
                         maxLength,
                         enforceUniqueValues,
@@ -234,6 +245,9 @@ namespace SharePoint_Discovery_App
                         defaultValue,
                         formula
                     );
+
+                    lbl_Row_Count.Text = i.ToString() + " record(s) found";
+                    lbl_Row_Count.Refresh();
                 }
             }
         }
@@ -285,20 +299,36 @@ namespace SharePoint_Discovery_App
             lnk.UseColumnTextForLinkValue = false;
 
             DataGridViewColumn col = null;
+            DataGridViewCheckBoxColumn colQuickEdit = new DataGridViewCheckBoxColumn();
+            DataGridViewCheckBoxColumn colVersioning = new DataGridViewCheckBoxColumn();
 
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int);
+            colQuickEdit.ValueType = typeof(bool);
+            colQuickEdit.Name = "quickEdit";
+            colQuickEdit.HeaderText = "Quick Edit";
+
+            colVersioning.ValueType = typeof(bool);
+            colVersioning.Name = "versioning";
+            colVersioning.HeaderText = "Versioning";
+
+
+
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("rowNumber", "Number")]; col.ValueType = typeof(int); col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             col = dgv_Data.Columns[dgv_Data.Columns.Add("siteName", "Site Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("siteAddress", "Site Address")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("listName", "List Name")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("description", "Description")];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("baseType", "Type")];
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("defaultView", "Default View")];
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldCount", "Field Count")]; col.ValueType = typeof(int);
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("viewCount", "View Count")]; col.ValueType = typeof(int);
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("itemCount", "Item Count")]; col.ValueType = typeof(int);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add(colVersioning)];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("versionLimit", "Version Limit")]; col.ValueType = typeof(int); col.DefaultCellStyle.Format = "#,##0;-#,##0;-"; col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("defaultView", "Default View")]; col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("fieldCount", "Field Count")]; col.ValueType = typeof(int); col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("viewCount", "View Count")]; col.ValueType = typeof(int); col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("itemCount", "Item Count")]; col.ValueType = typeof(int); ; col.DefaultCellStyle.Format = "#,##0;-#,##0;-"; col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col = dgv_Data.Columns[dgv_Data.Columns.Add(colQuickEdit)];
             col = dgv_Data.Columns[dgv_Data.Columns.Add("listId", "GUID")];
-            col = dgv_Data.Columns[dgv_Data.Columns.Add("created", "Created")]; col.ValueType = typeof(DateTime);
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("created", "Created")]; col.ValueType = typeof(DateTime); col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             col = dgv_Data.Columns[dgv_Data.Columns.Add(lnk)];
+            col = dgv_Data.Columns[dgv_Data.Columns.Add("schemaXml", "Schema XML")];
         }
 
         private void cmd_Open_List_Click(object sender, EventArgs e)

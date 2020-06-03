@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.cmd_Copy = new System.Windows.Forms.Button();
+            this.cmd_Get_Fields = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmd_Copy
@@ -42,15 +43,28 @@
             this.cmd_Copy.UseVisualStyleBackColor = true;
             this.cmd_Copy.Click += new System.EventHandler(this.cmd_Copy_Click);
             // 
+            // cmd_Get_Fields
+            // 
+            this.cmd_Get_Fields.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmd_Get_Fields.Location = new System.Drawing.Point(231, 394);
+            this.cmd_Get_Fields.Name = "cmd_Get_Fields";
+            this.cmd_Get_Fields.Size = new System.Drawing.Size(107, 44);
+            this.cmd_Get_Fields.TabIndex = 24;
+            this.cmd_Get_Fields.Text = "Get Fields";
+            this.cmd_Get_Fields.UseVisualStyleBackColor = true;
+            this.cmd_Get_Fields.Click += new System.EventHandler(this.cmd_Get_Fields_Click);
+            // 
             // frm_Data_View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(588, 450);
+            this.Controls.Add(this.cmd_Get_Fields);
             this.Controls.Add(this.cmd_Copy);
             this.Name = "frm_Data_View";
             this.Load += new System.EventHandler(this.frm_Data_View_Load);
             this.Controls.SetChildIndex(this.lbl_Header, 0);
             this.Controls.SetChildIndex(this.cmd_Copy, 0);
+            this.Controls.SetChildIndex(this.cmd_Get_Fields, 0);
             this.ResumeLayout(false);
 
         }
@@ -58,5 +72,6 @@
         #endregion
 
         private System.Windows.Forms.Button cmd_Copy;
+        private System.Windows.Forms.Button cmd_Get_Fields;
     }
 }

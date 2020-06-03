@@ -45,6 +45,7 @@
             this.tip_Limit = new System.Windows.Forms.ToolTip(this.components);
             this.btn_Test_List = new System.Windows.Forms.Button();
             this.nud_Limit = new System.Windows.Forms.NumericUpDown();
+            this.lbl_Site_Count = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Limit)).BeginInit();
             this.SuspendLayout();
             // 
@@ -184,11 +185,20 @@
             this.nud_Limit.Size = new System.Drawing.Size(41, 20);
             this.nud_Limit.TabIndex = 14;
             // 
+            // lbl_Site_Count
+            // 
+            this.lbl_Site_Count.AutoSize = true;
+            this.lbl_Site_Count.Location = new System.Drawing.Point(327, 323);
+            this.lbl_Site_Count.Name = "lbl_Site_Count";
+            this.lbl_Site_Count.Size = new System.Drawing.Size(0, 13);
+            this.lbl_Site_Count.TabIndex = 15;
+            // 
             // frm_Main_Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(582, 440);
+            this.Controls.Add(this.lbl_Site_Count);
             this.Controls.Add(this.nud_Limit);
             this.Controls.Add(this.btn_Test_List);
             this.Controls.Add(this.lbl_Limit);
@@ -232,5 +242,6 @@
         private System.Windows.Forms.ToolTip tip_Limit;
         private System.Windows.Forms.Button btn_Test_List;
         private System.Windows.Forms.NumericUpDown nud_Limit;
+        private System.Windows.Forms.Label lbl_Site_Count;
     }
 }

@@ -80,6 +80,11 @@ namespace SharePoint_Discovery_App
             // Loop through array to get values
             for (int i = 0; i < list.Length; i++)
             {
+                if(i == list.Length - 1)
+                {
+                    //System.Diagnostics.Debugger.Break();
+                }
+
                 if(dgv_Data.Columns[i].ValueType == null)
                 {
                     // We did not assign a value type. String is assumed.

@@ -39,8 +39,11 @@
             this.nud_Row_Limit = new System.Windows.Forms.NumericUpDown();
             this.cmd_Excel = new System.Windows.Forms.Button();
             this.lbl_Summary = new System.Windows.Forms.Label();
+            this.tlp_Search_Fields = new System.Windows.Forms.TableLayoutPanel();
+            this.cmd_Versions = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Row_Limit)).BeginInit();
+            this.tlp_Search_Fields.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv_List
@@ -53,7 +56,7 @@
             this.dgv_List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_List.Location = new System.Drawing.Point(12, 51);
             this.dgv_List.Name = "dgv_List";
-            this.dgv_List.Size = new System.Drawing.Size(650, 304);
+            this.dgv_List.Size = new System.Drawing.Size(650, 300);
             this.dgv_List.TabIndex = 0;
             // 
             // cmd_Close
@@ -80,10 +83,9 @@
             // 
             // lbl_Url
             // 
-            this.lbl_Url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_Url.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_Url.AutoSize = true;
-            this.lbl_Url.Location = new System.Drawing.Point(236, 402);
+            this.lbl_Url.Location = new System.Drawing.Point(3, 12);
             this.lbl_Url.Name = "lbl_Url";
             this.lbl_Url.Size = new System.Drawing.Size(50, 13);
             this.lbl_Url.TabIndex = 22;
@@ -91,18 +93,18 @@
             // 
             // txt_Url
             // 
-            this.txt_Url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.txt_Url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_Url.Location = new System.Drawing.Point(239, 418);
+            this.txt_Url.Location = new System.Drawing.Point(3, 28);
             this.txt_Url.Name = "txt_Url";
-            this.txt_Url.Size = new System.Drawing.Size(67, 20);
+            this.txt_Url.Size = new System.Drawing.Size(152, 20);
             this.txt_Url.TabIndex = 20;
             // 
             // lbl_Guid
             // 
-            this.lbl_Guid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbl_Guid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_Guid.AutoSize = true;
-            this.lbl_Guid.Location = new System.Drawing.Point(309, 402);
+            this.lbl_Guid.Location = new System.Drawing.Point(161, 12);
             this.lbl_Guid.Name = "lbl_Guid";
             this.lbl_Guid.Size = new System.Drawing.Size(53, 13);
             this.lbl_Guid.TabIndex = 21;
@@ -110,10 +112,11 @@
             // 
             // txt_Guid
             // 
-            this.txt_Guid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_Guid.Location = new System.Drawing.Point(312, 418);
+            this.txt_Guid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_Guid.Location = new System.Drawing.Point(161, 28);
             this.txt_Guid.Name = "txt_Guid";
-            this.txt_Guid.Size = new System.Drawing.Size(233, 20);
+            this.txt_Guid.Size = new System.Drawing.Size(62, 20);
             this.txt_Guid.TabIndex = 19;
             // 
             // lbl_Row_Limit
@@ -170,19 +173,48 @@
             this.lbl_Summary.Size = new System.Drawing.Size(0, 13);
             this.lbl_Summary.TabIndex = 27;
             // 
+            // tlp_Search_Fields
+            // 
+            this.tlp_Search_Fields.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlp_Search_Fields.ColumnCount = 2;
+            this.tlp_Search_Fields.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tlp_Search_Fields.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tlp_Search_Fields.Controls.Add(this.txt_Url, 0, 1);
+            this.tlp_Search_Fields.Controls.Add(this.lbl_Guid, 1, 0);
+            this.tlp_Search_Fields.Controls.Add(this.txt_Guid, 1, 1);
+            this.tlp_Search_Fields.Controls.Add(this.lbl_Url, 0, 0);
+            this.tlp_Search_Fields.Location = new System.Drawing.Point(330, 387);
+            this.tlp_Search_Fields.Name = "tlp_Search_Fields";
+            this.tlp_Search_Fields.RowCount = 2;
+            this.tlp_Search_Fields.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Search_Fields.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp_Search_Fields.Size = new System.Drawing.Size(226, 51);
+            this.tlp_Search_Fields.TabIndex = 28;
+            // 
+            // cmd_Versions
+            // 
+            this.cmd_Versions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmd_Versions.Enabled = false;
+            this.cmd_Versions.Location = new System.Drawing.Point(224, 394);
+            this.cmd_Versions.Name = "cmd_Versions";
+            this.cmd_Versions.Size = new System.Drawing.Size(100, 44);
+            this.cmd_Versions.TabIndex = 29;
+            this.cmd_Versions.Text = "Previous Versions";
+            this.cmd_Versions.UseVisualStyleBackColor = true;
+            this.cmd_Versions.Click += new System.EventHandler(this.cmd_Versions_Click);
+            // 
             // frm_Test_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(674, 450);
+            this.Controls.Add(this.cmd_Versions);
+            this.Controls.Add(this.tlp_Search_Fields);
             this.Controls.Add(this.lbl_Summary);
             this.Controls.Add(this.cmd_Excel);
             this.Controls.Add(this.nud_Row_Limit);
             this.Controls.Add(this.lbl_Row_Limit);
-            this.Controls.Add(this.txt_Guid);
-            this.Controls.Add(this.lbl_Url);
-            this.Controls.Add(this.lbl_Guid);
-            this.Controls.Add(this.txt_Url);
             this.Controls.Add(this.cmd_Open_List);
             this.Controls.Add(this.cmd_Close);
             this.Controls.Add(this.dgv_List);
@@ -191,6 +223,8 @@
             this.Load += new System.EventHandler(this.frm_Test_List_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_List)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Row_Limit)).EndInit();
+            this.tlp_Search_Fields.ResumeLayout(false);
+            this.tlp_Search_Fields.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,5 +243,7 @@
         public System.Windows.Forms.TextBox txt_Guid;
         private System.Windows.Forms.Button cmd_Excel;
         private System.Windows.Forms.Label lbl_Summary;
+        private System.Windows.Forms.TableLayoutPanel tlp_Search_Fields;
+        private System.Windows.Forms.Button cmd_Versions;
     }
 }

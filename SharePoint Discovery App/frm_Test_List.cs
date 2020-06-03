@@ -8,6 +8,9 @@ namespace SharePoint_Discovery_App
 {
     public partial class frm_Test_List : System.Windows.Forms.Form
     {
+        ClientContext clientContext = null;
+        List oList = null;
+
         public frm_Test_List()
         {
             InitializeComponent();
@@ -20,6 +23,9 @@ namespace SharePoint_Discovery_App
 
         private void frm_Test_List_Load(object sender, EventArgs e)
         {
+            this.txt_Guid.Text = "1456cb7b-c2f5-4291-8bfc-cec60c153588";
+            this.txt_Url.Text = @"https://brandingscience.sharepoint.com/BScFiles/3 Jobs Area/jobs";
+
             this.Width = 1000;
         }
 
@@ -30,13 +36,15 @@ namespace SharePoint_Discovery_App
             dgv_List.Columns.Clear();
             dgv_List.Refresh();
 
+            cmd_Versions.Enabled = false;
+
             string url = this.txt_Url.Text;
             string guid = this.txt_Guid.Text;
 
             string errorMessage = null;
 
             // Get client
-            ClientContext clientContext = SharePoint.GetClient(url, frm_Main_Menu.username, frm_Main_Menu.password, ref errorMessage);
+            clientContext = SharePoint.GetClient(url, frm_Main_Menu.username, frm_Main_Menu.password, ref errorMessage);
 
             if (clientContext == null)
             {
@@ -47,9 +55,21 @@ namespace SharePoint_Discovery_App
             // Get the SharePoint web  
             Web web = clientContext.Web;
 
-            Guid g = new Guid(guid);
-
-            List oList = web.Lists.GetById(g);
+            try
+            {
+                Guid g = new Guid(guid);
+                oList = web.Lists.GetById(g);
+            }
+            catch(System.FormatException fex)
+            {
+                MessageBox.Show(fex.Message, "Incorrect GUID Format");
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
 
             // Load list
             clientContext.Load(oList);
@@ -65,13 +85,13 @@ namespace SharePoint_Discovery_App
                 return;
             }
 
-            BindList(clientContext, oList);            
+            BindList(oList.Fields);            
         }
 
-        private void BindList(ClientContext clientContext, List oList)
+        private void BindList(SP.FieldCollection collField)
         {
             // Load in the Fields
-            clientContext.Load(oList.Fields);
+            clientContext.Load(collField);
             clientContext.ExecuteQuery();
 
             int i = 0;
@@ -118,6 +138,7 @@ namespace SharePoint_Discovery_App
                     col.Name = oField.InternalName;
                     col.HeaderText = oField.Title;
                     dgv_List.Columns.Add(col);
+                    col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     col.Visible = show;
 
                     // Refresh for visual effect
@@ -169,6 +190,9 @@ namespace SharePoint_Discovery_App
             // Reset row counter
             i = 0;
 
+            // Declare variable for reporting column lookup errors
+            string colError = "";
+
             // Loop through each item in the collection
             foreach (ListItem oListItem in collListItem)
             {
@@ -191,28 +215,48 @@ namespace SharePoint_Discovery_App
                         j++;
 
                         // Store the list/field value
-                        var value = oListItem.FieldValues[oField.InternalName];
-
-                        // Check for null
-                        if(value != null)
+                        try
                         {
-                            // Try and lookup object-based fields
-                            switch (value.ToString())
+                            var value = oListItem.FieldValues[oField.InternalName];
+
+                            // Check for null
+                            if (value != null)
                             {
-                                case "Microsoft.SharePoint.Client.FieldUserValue":
-                                    SP.FieldUserValue uField = (SP.FieldUserValue)value;
-                                    value = uField.LookupValue.ToString();
-                                    break;
-                                case "Microsoft.SharePoint.Client.FieldLookupValue[]":
+                                /*
+                                // Try and lookup object-based fields
+                                switch (value.ToString())
+                                {
+                                    case "Microsoft.SharePoint.Client.FieldUserValue":
 
-                                    value = null;
+                                        SP.FieldUserValue uField = (SP.FieldUserValue)value;
+                                        value = uField.LookupValue.ToString();
 
-                                    break;
+                                        break;
+
+                                    case "Microsoft.SharePoint.Client.FieldLookupValue[]":
+
+                                        value = null;
+
+                                        break;
+                                }
+                                */
+
+                                value = ChangeValue(value);
                             }
-                        }
 
-                        // Enter the value in the cell
-                        dgv_List[j, i].Value = value;
+                            // Enter the value in the cell
+                            dgv_List[j, i].Value = value;
+                        }
+                        catch(Exception ex)
+                        {
+                            // Report as lookup error
+                            if (i == 0)
+                            {
+                                colError += oField.InternalName + "\r\n";
+                            }
+
+                            j--;
+                        }
                     }
                 }
 
@@ -228,6 +272,14 @@ namespace SharePoint_Discovery_App
                 {
                     break;
                 }
+            }
+
+            // Report column lookup errors
+            if(colError != "")
+            {
+                colError = "The following columns could not be found in the FieldValues array:\r\n\r\n" + colError;
+
+                MessageBox.Show(colError, "Column Not Found");
             }
 
             // Finally, if any rows got added, auto-size the columns
@@ -255,12 +307,109 @@ namespace SharePoint_Discovery_App
 
                 lbl_Summary.Text = text;
                 lbl_Summary.Refresh();
+
+                cmd_Versions.Enabled = true;
             }
+        }
+
+        private dynamic ChangeValue(dynamic value)
+        {
+            // Try and lookup object-based fields
+            switch (value.ToString())
+            {
+                case "Microsoft.SharePoint.Client.FieldUserValue":
+
+                    SP.FieldUserValue uField = (SP.FieldUserValue)value;
+                    value = uField.LookupValue.ToString();
+
+                    break;
+
+                case "Microsoft.SharePoint.Client.FieldLookupValue[]":
+
+                    value = null;
+
+                    break;
+            }
+
+            return value;
         }
 
         private void cmd_Excel_Click(object sender, EventArgs e)
         {
             cls_Excel.ExportDatagridview(dgv_List);
+        }
+
+        private void cmd_Versions_Click(object sender, EventArgs e)
+        {
+            if (clientContext == null)
+            {
+                return;
+            }
+
+            frm_Test_List testForm = new frm_Test_List();
+
+            // Disable / hide irrelevant controls
+            testForm.cmd_Open_List.Visible = false;
+            testForm.cmd_Versions.Visible = false;
+            testForm.txt_Guid.Visible = false;
+            testForm.txt_Url.Visible = false;
+            testForm.lbl_Guid.Visible = false;
+            testForm.lbl_Url.Visible = false;
+            testForm.nud_Row_Limit.Value = 0;
+            testForm.nud_Row_Limit.Enabled = false;
+
+            testForm.Show();
+
+            int col = dgv_List.Columns["ID"].Index;
+            int row = dgv_List.CurrentRow.Index;
+            int id = (int)dgv_List[col, row].Value;
+
+            // Find the specified item
+            SP.ListItem oListItem = oList.GetItemById(id);
+
+            // Load the Item
+            clientContext.Load(oListItem);
+
+            // Load the Versions
+            clientContext.Load(oListItem.Versions);
+
+            // Do this bit
+            clientContext.ExecuteQuery();
+
+            // Loop through each Version
+            foreach (SP.ListItemVersion versionItem in oListItem.Versions)
+            {
+                // Retrieve the fields
+                SP.FieldCollection collField = versionItem.Fields;
+
+                clientContext.Load(collField);
+                clientContext.ExecuteQuery();
+
+                int i = 0;
+
+                // Loop through fields
+                foreach (SP.Field oField in collField)
+                {
+                    string fieldName = oField.Title;
+                    string fieldValue = "null";
+
+                    try
+                    {
+                        if (oListItem[oField.InternalName] != null)
+                        {
+                            fieldValue = versionItem[oField.InternalName].ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        fieldValue = "Error";
+                    }
+                    finally
+                    {
+                        i++;
+                    }
+                }
+            }
         }
     }
 }

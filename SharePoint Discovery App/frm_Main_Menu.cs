@@ -17,6 +17,10 @@ namespace SharePoint_Discovery_App
 
         private void frm_Main_Menu_Load(object sender, EventArgs e)
         {
+            txt_Site.Text = "https://sharepoint.com";
+            txt_Username.Text = "";
+            txt_Password.Text = "";
+
             tip_Recursive.SetToolTip(this.chk_Recursive, "Uncheck to search sub-sites 1 layer deep (quicker). Check to recursively search all sites (slower).");
             tip_Limit.SetToolTip(this.nud_Limit, "Limit the number of sub-sites retrieved (quicker). Set to zero to retreive all sub-sites (slower).");
         }
@@ -97,9 +101,6 @@ namespace SharePoint_Discovery_App
             // Get the SharePoint web  
             Web web = clientContext.Web;
 
-            // Load objects
-            //clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
-
             // Load lists
             clientContext.Load(web.Lists);
 
@@ -122,7 +123,7 @@ namespace SharePoint_Discovery_App
             clientContext.Load(web, website => website.Webs, website => website.Title, website => website.Url);
 
             // Load lists
-            clientContext.Load(web.Lists);
+            //clientContext.Load(web.Lists);
 
             // Execute the query to the server  
             clientContext.ExecuteQuery();
@@ -157,8 +158,17 @@ namespace SharePoint_Discovery_App
                         parentNew = web.Title;
                     }
 
+                    // Load lists
+                    clientContext.Load(subWeb.Lists);
+
+                    // Execute the query to the server  
+                    clientContext.ExecuteQuery();
+
                     // Add row to data grid view
-                    siteForm.AddRow(i.ToString(), subWeb.Title, parentNew, web.Lists.Count.ToString(), web.Created, subWeb.Url);
+                    siteForm.AddRow(i.ToString(), subWeb.Title, parentNew, subWeb.Lists.Count.ToString(), web.Created, subWeb.Url);
+
+                    this.lbl_Site_Count.Text = i.ToString() + " site(s) found";
+                    this.lbl_Site_Count.Refresh();
 
                     // Loop through sub-sites
                     if (recursive)
